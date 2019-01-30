@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(MainActivity.this, SignUpActivity.class);
+                intent = new Intent(MainActivity.this, AirHistoryActivity.class);
                 startActivity(intent);
             }
         });
