@@ -12,14 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="24dp" />
+        app:layout_constraintGuide_begin="@dimen/guideline_gap" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="24dp" />
+        app:layout_constraintGuide_end="@dimen/guideline_gap" />
 
     <TextView
         android:id="@+id/warning_text"
@@ -28,7 +28,7 @@
         android:layout_marginTop="16dp"
         android:text="This is ID Cancelation, If you want to delete all data from this app, Please click the button after fill out all text."
         android:textColor="@color/warning_color"
-        android:lineSpacingExtra="10dp"
+        android:lineSpacingExtra="3dp"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"

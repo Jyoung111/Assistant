@@ -1,8 +1,14 @@
 package com.example.jy.assistant;
 
+import android.app.ActionBar;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,15 +18,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Intent intent;
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleMarginStart(300);
         setSupportActionBar(toolbar);
 
 
@@ -89,5 +103,38 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.heart_btn:
+                intent = new Intent(this, HeartRateHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.pm_btn:
+                intent = new Intent(this, AirHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.co_btn:
+                intent = new Intent(this, AirHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.co2_btn:
+                intent = new Intent(this, AirHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.so2_btn:
+                intent = new Intent(this, AirHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.no2_btn:
+                intent = new Intent(this, AirHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.o3_btn:
+                intent = new Intent(this, AirHistoryActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

@@ -12,25 +12,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="24dp" />
+        app:layout_constraintGuide_begin="@dimen/guideline_gap" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="24dp" />
+        app:layout_constraintGuide_end="@dimen/guideline_gap" />
 
     <TextView
         android:id="@+id/email_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="E-mail : "
-        android:textStyle="bold"
         android:textColor="@color/login_form_details_dark"
-        app:layout_constraintHorizontal_bias="0.071"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@null"
         android:padding="10dp"
         android:src="@drawable/search"
@@ -75,7 +75,7 @@
         android:visibility="gone"
         android:text="Check text"
         android:textColor="@color/login_form_details_dark"
-        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/email" />
@@ -89,9 +89,9 @@
         android:text="Password : "
         android:textStyle="bold"
         android:textColor="@color/login_form_details_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/check_text" />
 
     <EditText
@@ -115,9 +115,9 @@
         android:text="First_name : "
         android:textStyle="bold"
         android:textColor="@color/login_form_details_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <EditText
@@ -140,9 +140,9 @@
         android:text="Last_name : "
         android:textStyle="bold"
         android:textColor="@color/login_form_details_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/password_confirm" />
 
     <EditText
@@ -165,9 +165,9 @@
         android:textStyle="bold"
         android:text="Sex : "
         android:textColor="@color/login_form_details_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/last_name" />
 
     <RadioGroup
@@ -211,7 +211,7 @@
         android:background="@drawable/bg_login"
         android:text="Sign up"
         android:textAllCaps="false"
-        android:textColor="@color/login_form_details_dark"
+        android:textColor="@color/login_form_details"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"

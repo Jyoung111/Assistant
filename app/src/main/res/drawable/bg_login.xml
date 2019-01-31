@@ -6,10 +6,10 @@
         <!--android:endColor="@color/purple"-->
         <!--android:angle="135"/>-->
     <gradient
-        android:startColor="#00c6ff"
-        android:endColor="#0072ff"
+        android:startColor="#0072ff"
+        android:endColor="#00c6ff"
         android:angle="135"/>
 
-    <corners android:radius="2dp"/>
+    <corners android:radius="100dp"/>
 
 </shape>

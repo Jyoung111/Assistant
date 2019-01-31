@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class SignUpActivity extends AppCompatActivity {
 
     ImageButton check_btn;
@@ -34,5 +36,11 @@ public class SignUpActivity extends AppCompatActivity {
                 check_text.setTextColor(Color.parseColor("#008000"));
             }
         });
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_title);
+        TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.mytext);
+        title.setText("Sign up");
+
     }
 }

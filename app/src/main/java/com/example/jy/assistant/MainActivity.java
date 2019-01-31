@@ -1,5 +1,6 @@
 package com.example.jy.assistant;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,11 +23,10 @@ public class MainActivity extends AppCompatActivity {
         login_btn = (Button) findViewById(R.id.btn_login);
         signup_text = (TextView) findViewById(R.id.signup_text);
 
-
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(MainActivity.this, AirHistoryActivity.class);
+                intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(MainActivity.this, FindPasswordActivity.class);
                 startActivity(intent);
                 break;
-
         }
     }
 }

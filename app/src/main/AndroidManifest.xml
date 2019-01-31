@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".MainActivity"
             android:label="login"
@@ -21,17 +22,23 @@
         </activity>
         <activity android:name=".SplashActivity" />
         <activity android:name=".Home_tempActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".SignUpActivity"
+            android:label="SignUp"
+            />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".DeleteAccountActivity" />
         <activity android:name=".FindPasswordActivity" />
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home"
+            android:label="Home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AirHistoryActivity"
-            android:label="Air History"
-            ></activity>
+        <activity
+            android:name=".AirHistoryActivity"
+            android:label="Air History" />
+        <activity
+            android:name=".HeartRateHistoryActivity"
+            android:label="Heart Rate History" />
+        <activity android:name=".ChangeNowPwdActivity"></activity>
     </application>
 
 </manifest>
