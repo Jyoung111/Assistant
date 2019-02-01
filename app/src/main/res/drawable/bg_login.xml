@@ -6,8 +6,8 @@
         <!--android:endColor="@color/purple"-->
         <!--android:angle="135"/>-->
     <gradient
-        android:startColor="#0072ff"
-        android:endColor="#00c6ff"
+        android:startColor="#86A8E7"
+        android:endColor="#91EAE4"
         android:angle="135"/>
 
     <corners android:radius="100dp"/>

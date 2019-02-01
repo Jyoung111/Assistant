@@ -47,7 +47,7 @@
         android:drawableLeft="@drawable/profile"
         app:fontFamily="@font/sarabun_bold"
         android:drawablePadding="10dp"
-        android:padding="16dp"
+        android:padding="13dp"
         />
 
     <EditText
@@ -65,7 +65,7 @@
         app:fontFamily="@font/sarabun_bold"
         android:drawablePadding="10dp"
         android:textColorHint="@color/login_form_details_gray"
-        android:padding="16dp"
+        android:padding="13dp"
         />
 
     <Button

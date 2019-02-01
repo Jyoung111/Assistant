@@ -19,4 +19,17 @@
 
     <color name="transparent">@null</color>
 
+    <!-- AQI color -->
+
+    <color name="good">#00e400</color>
+    <color name="Moderate">#ff0</color>
+    <color name="Unhealthy_for_Sensitive_Groups">#ff7e00</color>
+    <color name="Unhealthy">#f00</color>
+    <color name="Very_Unhealthy">#99004c</color>
+    <color name="Hazardous">#7e0023</color>
+
+
+    <!-- Circle view color-->
+    <color name="circle_view_outside_color">#0D000000</color>
+
 </resources>

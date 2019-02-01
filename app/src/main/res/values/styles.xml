@@ -15,7 +15,7 @@
         <item name="android:textColor">@color/login_form_details_dark</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:titleMarginStart" tools:targetApi="n">100dp</item>
+        <!--<item name="android:titleMarginStart" tools:targetApi="n">100dp</item>-->
     </style>
 
     <style name="TitleBarTextAppearance" parent="android:TextAppearance">

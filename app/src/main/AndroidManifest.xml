@@ -35,13 +35,12 @@
         <activity
             android:name=".HomeActivity"
             android:label="Sandiego, UCSD"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
-            android:name=".AirHistoryActivity"
-            android:label="Air History" />
+            android:name=".AirHistoryActivity"/>
         <activity
-            android:name=".HeartRateHistoryActivity"
-            android:label="Heart Rate History" />
+            android:name=".HeartRateHistoryActivity" />
         <activity android:name=".ChangeNowPwdActivity"></activity>
     </application>
 
