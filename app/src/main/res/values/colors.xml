@@ -15,6 +15,7 @@
 
     <color name="radio_btn_color">#3399ff</color>
     <color name="warning_color">#f00</color>
+    <color name="temp_color">#f00</color>
 
     <color name="transparent">@null</color>
 

@@ -20,17 +20,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity" />
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity android:name=".Home_tempActivity" />
         <activity android:name=".SignUpActivity"
-            android:label="SignUp"
+            android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".DeleteAccountActivity" />
-        <activity android:name=".FindPasswordActivity" />
+        <activity android:name=".FindPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".HomeActivity"
-            android:label="Home"
+            android:label="Sandiego, UCSD"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AirHistoryActivity"

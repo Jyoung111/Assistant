@@ -18,7 +18,14 @@
         <item name="android:titleMarginStart" tools:targetApi="n">100dp</item>
     </style>
 
-<!-- test-->
+    <style name="TitleBarTextAppearance" parent="android:TextAppearance">
+        <item name="android:fontFamily" tools:ignore="NewApi">@font/normal_font</item>
+        <item name="android:textSize">23dp</item>
+        <item name="android:textColor">@color/login_form_details_dark</item>
+    </style>
+
+
+<!-- normal_font-->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
