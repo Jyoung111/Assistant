@@ -25,10 +25,10 @@
         android:id="@+id/email_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/bold_font"
         android:text="E-mail : "
         android:textColor="@color/login_form_details_dark"
-        android:fontFamily="@font/bold_font"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -110,6 +110,34 @@
         app:layout_constraintTop_toBottomOf="@+id/password_confirm_text" />
 
     <TextView
+        android:id="@+id/password_confirm_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/bold_font"
+        android:text="Password Confi: "
+        android:textColor="@color/login_form_details_dark"
+        app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <EditText
+        android:id="@+id/password1"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/et_bg"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:fontFamily="@font/normal_font"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm_text1" />
+
+
+    <TextView
         android:id="@+id/first_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,7 +148,7 @@
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password1" />
 
     <EditText
         android:id="@+id/password_confirm"

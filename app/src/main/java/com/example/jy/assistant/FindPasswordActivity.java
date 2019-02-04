@@ -1,8 +1,10 @@
 package com.example.jy.assistant;
 
+import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class FindPasswordActivity extends AppCompatActivity {
 
@@ -12,5 +14,10 @@ public class FindPasswordActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_find_password);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_title);
+        TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.mytext);
+        title.setText("Forgot Password");
     }
 }

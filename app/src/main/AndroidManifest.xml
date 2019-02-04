@@ -25,12 +25,10 @@
             />
         <activity android:name=".Home_tempActivity" />
         <activity android:name=".SignUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".DeleteAccountActivity" />
         <activity android:name=".FindPasswordActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
             android:name=".HomeActivity"
