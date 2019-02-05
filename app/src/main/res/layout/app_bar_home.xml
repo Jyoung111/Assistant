@@ -20,7 +20,21 @@
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             app:titleTextAppearance="@style/TitleBarTextAppearance"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:fontFamily="@font/normal_font"
+                android:text="Sandiego, UCSD"
+                android:textColor="#000"
+                android:textSize="20dp"
+                app:fontFamily="@font/sarabun_medium" />
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

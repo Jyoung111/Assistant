@@ -13,5 +13,6 @@
     <dimen name="heart_textsize">20dp</dimen>
     <dimen name="home_airdata_textsize">25dp</dimen>
     <dimen name="home_circle_textsize">17dp</dimen>
+    <dimen name="edittext_left_padding">5dp</dimen>
 
 </resources>

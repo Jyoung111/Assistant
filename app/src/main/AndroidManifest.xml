@@ -11,18 +11,18 @@
         android:theme="@style/AppTheme"
         >
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="login"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
         <activity android:name=".Home_tempActivity" />
         <activity android:name=".SignUpActivity"
             />
@@ -32,7 +32,7 @@
             />
         <activity
             android:name=".HomeActivity"
-            android:label="Sandiego, UCSD"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity

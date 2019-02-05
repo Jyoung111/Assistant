@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleMarginStart(150);
+        //toolbar.setTitleMarginStart(150);
         setSupportActionBar(toolbar);
 
 
