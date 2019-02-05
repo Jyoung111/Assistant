@@ -32,4 +32,6 @@
     <!-- Circle view color-->
     <color name="circle_view_outside_color">#0D000000</color>
 
+    <!-- My profile color-->
+    <color name="profile_heading">#3797CF</color>
 </resources>

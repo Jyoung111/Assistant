@@ -8,15 +8,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
             android:label="login"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,22 +23,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".Home_tempActivity" />
-        <activity android:name=".SignUpActivity"
-            />
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".DeleteAccountActivity" />
-        <activity android:name=".FindPasswordActivity"
-            />
+        <activity android:name=".FindPasswordActivity" />
         <activity
             android:name=".HomeActivity"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity
-            android:name=".AirHistoryActivity"/>
-        <activity
-            android:name=".HeartRateHistoryActivity" />
-        <activity android:name=".ChangeNowPwdActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AirHistoryActivity" />
+        <activity android:name=".HeartRateHistoryActivity" />
+        <activity android:name=".ChangeNowPwdActivity" />
+        <activity android:name=".MyProfileActivity"></activity>
     </application>
 
 </manifest>

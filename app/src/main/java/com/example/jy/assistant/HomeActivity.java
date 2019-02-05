@@ -26,7 +26,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Intent intent;
+    Intent intent, nav_header_intent;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -95,6 +95,8 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             // Handle the camera action
+            nav_header_intent = new Intent(this, MyProfileActivity.class);
+            startActivity(nav_header_intent);
         } else if (id == R.id.nav_aqi) {
 
         } else if (id == R.id.nav_settings) {

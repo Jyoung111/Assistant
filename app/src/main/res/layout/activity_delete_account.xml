@@ -25,14 +25,14 @@
         android:id="@+id/warning_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="3dp"
         android:text="This is ID Cancelation, If you want to delete all data from this app, Please click the button after fill out all text."
         android:textColor="@color/warning_color"
-        android:lineSpacingExtra="3dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        android:textSize="20dp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -53,6 +53,7 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
+        android:paddingLeft="5dp"
         android:background="@drawable/et_bg"
         android:inputType="textPassword"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
@@ -78,6 +79,7 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
+        android:paddingLeft="5dp"
         android:background="@drawable/et_bg"
         android:inputType="textPassword"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
