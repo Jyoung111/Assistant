@@ -19,6 +19,8 @@ public class MyProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
 
+
+        //Set ActionBar + BackButton in ActionBar
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.mytext);

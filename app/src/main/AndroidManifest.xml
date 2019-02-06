@@ -34,7 +34,8 @@
         <activity android:name=".AirHistoryActivity" />
         <activity android:name=".HeartRateHistoryActivity" />
         <activity android:name=".ChangeNowPwdActivity" />
-        <activity android:name=".MyProfileActivity"></activity>
+        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".AQI_IndexActivity"></activity>
     </application>
 
 </manifest>

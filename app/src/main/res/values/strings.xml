@@ -11,4 +11,6 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <string name="aqi_index_wiki"><a href="https://en.wikipedia.org/wiki/Air_quality_index">https://en.wikipedia.org/wiki/Air_quality_index</a></string>
+
 </resources>

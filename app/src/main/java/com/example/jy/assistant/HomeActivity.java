@@ -77,12 +77,12 @@ public class HomeActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -98,10 +98,13 @@ public class HomeActivity extends AppCompatActivity
             nav_header_intent = new Intent(this, MyProfileActivity.class);
             startActivity(nav_header_intent);
         } else if (id == R.id.nav_aqi) {
-
-        } else if (id == R.id.nav_settings) {
-
+            nav_header_intent = new Intent(this, AQI_IndexActivity.class);
+            startActivity(nav_header_intent);
+        }else if (id == R.id.nav_logout) {
         }
+//        else if (id == R.id.nav_settings) {
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
