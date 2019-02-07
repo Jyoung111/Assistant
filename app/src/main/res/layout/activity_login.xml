@@ -106,7 +106,9 @@
         android:layout_height="1dp"
         android:layout_marginBottom="50dp"
         android:background="#000"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        />
 
 
     <TextView
@@ -114,13 +116,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
         android:onClick="onClick"
         android:text="Forgot password?"
         android:textColor="@color/login_form_details_dark"
         app:fontFamily="@font/sarabun_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@id/footer_line" />
+        app:layout_constraintTop_toBottomOf="@+id/footer_line"
+        app:layout_constraintVertical_bias="0.111" />
 
 
 
