@@ -28,6 +28,7 @@
         android:text="@string/title_paired_devices"
         android:textColor="#fff"
         android:visibility="gone"
+        android:fontFamily="@font/normal_font"
         />
 
     <ListView
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:stackFromBottom="true"
+        android:fontFamily="@font/normal_font"
         />
 
     <TextView
@@ -47,6 +49,7 @@
         android:text="@string/title_other_devices"
         android:textColor="#fff"
         android:visibility="gone"
+        android:fontFamily="@font/normal_font"
         />
 
     <ListView
@@ -55,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:stackFromBottom="true"
+        android:fontFamily="@font/normal_font"
         />
 
     <Button
@@ -62,5 +66,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_scan"
+        android:fontFamily="@font/normal_font"
         />
 </LinearLayout>

@@ -24,7 +24,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="vertical"
                 >
@@ -42,19 +42,24 @@
                         android:fontFamily="@font/normal_font"
                         android:text="Sandiego, UCSD"
                         android:textColor="#000"
-                        android:textSize="19dp"
+                        android:textSize="18dp"
                         app:fontFamily="@font/sarabun_medium" />
 
                     <TextView
                         android:id="@+id/device_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
                         android:fontFamily="@font/normal_font"
                         android:text="Device not Connected"
+                        android:textAlignment="center"
                         android:textColor="@color/middle_gray"
-                        android:textSize="14dp"
+                        android:textSize="15dp"
+
                         app:fontFamily="@font/sarabun_medium" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"/>
+
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
