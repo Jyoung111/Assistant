@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jy.assistant">
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,6 +46,7 @@
         <activity android:name=".ChangeNowPwdActivity" />
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".AQI_IndexActivity"></activity>
+        <activity android:name=".DeviceListActivity" android:theme="@android:style/Theme.Holo.Dialog" android:label="@string/select_device"/>
     </application>
 
 </manifest>
