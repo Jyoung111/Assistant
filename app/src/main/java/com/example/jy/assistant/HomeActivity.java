@@ -46,6 +46,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import org.w3c.dom.Text;
 
+import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.function.ToLongBiFunction;
 
@@ -121,9 +122,12 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         //Google Map
+        Locale locale = new Locale("en","US");
+        Locale.setDefault(locale);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
 
         // Get local Bluetooth adapter
@@ -137,6 +141,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 sendMessage("test");
             }
         });
+
+
+
+
 
     }
 
@@ -348,6 +356,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng ucsd = new LatLng(32.882408, -117.234680);
         mMap.addMarker(new MarkerOptions().position(ucsd).title("Marker in UCSD"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(ucsd));
+
     }
 
     @Override
