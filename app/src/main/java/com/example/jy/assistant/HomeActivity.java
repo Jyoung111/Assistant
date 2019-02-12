@@ -29,6 +29,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import org.w3c.dom.Text;
+
+import java.util.StringTokenizer;
+import java.util.function.ToLongBiFunction;
 
 public class HomeActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
@@ -124,6 +130,13 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         activatePolar();
 
+        ImageView imageview3 = (ImageView)findViewById(R.id.imageView3);
+        imageview3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage("test");
+            }
+        });
 
     }
 
@@ -229,12 +242,26 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     byte[] writeBuf = (byte[]) msg.obj;
                     // construct a string from the buffer
                     String writeMessage = new String(writeBuf);
+                    Toast.makeText(HomeActivity.this, writeMessage,Toast.LENGTH_SHORT).show();
                     //mConversationArrayAdapter.add("Me:  " + writeMessage);
                     break;
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
+                    StringTokenizer tokens = new StringTokenizer(readMessage, ",");
+                    Toast.makeText(HomeActivity.this, readMessage,Toast.LENGTH_SHORT).show();
+
+
+
+//                    int epoch_time  = Integer.parseInt(tokens.nextToken());
+//                    double temp  = Double.parseDouble(tokens.nextToken());
+//                    double SN1  = Double.parseDouble(tokens.nextToken());
+//                    double SN2 = Double.parseDouble(tokens.nextToken());
+//                    double SN3 = Double.parseDouble(tokens.nextToken());
+//                    double SN4 = Double.parseDouble(tokens.nextToken());
+//                    double PM25  = Double.parseDouble(tokens.nextToken());
+//                    Log.w(this.getClass().getName(), "####Received epoch_time: " +epoch_time+" temp: "+temp+" SN1: "+SN1+" SN2: "+SN2+" SN3: "+SN3+" SN4: "+SN4+" PM25: "+PM25);
                     //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
@@ -280,6 +307,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
                     connectDevice(data, false);
+
                 }
                 break;
             case REQUEST_ENABLE_BT:
@@ -415,6 +443,26 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent = new Intent(this, AirHistoryActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+
+    private void sendMessage(String message) {
+        // Check that we're actually connected before trying anything
+        if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
+            Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check that there's actually something to send
+        if (message.length() > 0) {
+            // Get the message bytes and tell the BluetoothChatService to write
+            byte[] send = message.getBytes();
+            mChatService.write(send);
+
+            // Reset out string buffer to zero and clear the edit text field
+            mOutStringBuffer.setLength(0);
+            Toast.makeText(HomeActivity.this, "test", Toast.LENGTH_SHORT);
         }
     }
 
