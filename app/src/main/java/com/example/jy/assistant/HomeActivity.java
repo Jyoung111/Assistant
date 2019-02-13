@@ -42,6 +42,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -57,6 +58,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -100,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
 
-
+    LatLng currentLatLng;
     /**
      * Name of the connected device
      */
@@ -141,7 +143,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     Location mCurrentLocatiion;
     boolean mMoveMapByUser = true;
     boolean mMoveMapByAPI = true;
-    LatLng currentPosition;
+    LatLng currentPosition = new LatLng(32.883837, -117.232740);
 
     LocationRequest locationRequest = new LocationRequest()
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -150,6 +152,11 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     private Circle mCircle;
+    private ImageButton heart_btn;
+
+    //HeartRate Image variable
+    private Thread heart_img_thread;
+    SupportMapFragment mapFragment;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -175,26 +182,17 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         //Google Map
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        mapFragment.onResume();
 
         // Get local Bluetooth adapter
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         activatePolar();
 
-        ImageView imageview3 = (ImageView) findViewById(R.id.imageView3);
-        imageview3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage("test");
-            }
-        });
-
 
         //Now Location Settings
-        Log.d(TAG, "onCreate");
         mActivity = this;
 
 
@@ -209,6 +207,20 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                .findFragmentById(R.id.map);
 //        mapFragment.getMapAsync(this);
 
+
+        //ImageButton Settings
+        heart_btn = (ImageButton)findViewById(R.id.heart_btn);
+        //heart_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
+
+        heart_img_thread = new Thread() {
+            @Override
+            public void run() {
+                heart_btn.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.pulse));
+            }
+        };
+
+
+        heart_img_thread.start();
 
     }
 
@@ -235,6 +247,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onStart() {
         super.onStart();
+
         // If BT is not on, request that it be enabled.
         // setupChat() will then be called during onActivityResult
         if (!mBluetoothAdapter.isEnabled()) {
@@ -287,6 +300,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onResume() {
         super.onResume();
+
 
         // Performing this check in onResume() covers the case in which BT was
         // not enabled during onStart(), so we were paused to enable it...
@@ -349,6 +363,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
+                           // heart_btn.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.pulse));
 //                            mConversationArrayAdapter.clear();
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
@@ -357,6 +372,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         case BluetoothChatService.STATE_LISTEN:
                         case BluetoothChatService.STATE_NONE:
                             setStatus(R.string.title_not_connected);
+                            //heart_btn.clearAnimation();
                             break;
                     }
                     break;
@@ -518,6 +534,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Log.d(TAG, "onMyLocationButtonClick : 위치에 따른 카메라 이동 활성화");
                 mMoveMapByAPI = true;
+                moveCameraNow();
                 return true;
             }
         });
@@ -736,7 +753,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onConnected(Bundle connectionHint) {
 
-
         if ( mRequestingLocationUpdates == false ) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -832,16 +848,27 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    private void moveCameraNow(){
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(currentLatLng);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 17.5f);
+        //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
+        mGoogleMap.moveCamera(cameraUpdate);
+    }
 
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
 
+        mapFragment.onStart();
+        mapFragment.onResume();
+
         mMoveMapByUser = false;
+
 
 
         if (currentMarker != null) currentMarker.remove();
 
 
-        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(currentLatLng);
@@ -857,6 +884,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
              CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 17.5f);
             //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
             mGoogleMap.moveCamera(cameraUpdate);
+
         }
     }
 
