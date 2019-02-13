@@ -155,7 +155,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ImageButton heart_btn;
 
     //HeartRate Image variable
-    private Thread heart_img_thread;
     SupportMapFragment mapFragment;
 
 
@@ -210,17 +209,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //ImageButton Settings
         heart_btn = (ImageButton)findViewById(R.id.heart_btn);
-        //heart_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
-
-        heart_img_thread = new Thread() {
-            @Override
-            public void run() {
-                heart_btn.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.pulse));
-            }
-        };
+        heart_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
 
 
-        heart_img_thread.start();
+
 
     }
 
@@ -910,7 +902,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mGoogleMap.addMarker(markerOptions);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 17);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 17.5f);
         mGoogleMap.moveCamera(cameraUpdate);
 
     }
