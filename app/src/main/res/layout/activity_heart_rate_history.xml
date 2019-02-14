@@ -14,7 +14,7 @@
         android:layout_weight="0.7">
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/endCal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="150dp"
@@ -35,11 +35,11 @@
             android:fontFamily="@font/normal_font"
             android:text="End"
             android:textColor="@color/login_form_details_dark"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintStart_toEndOf="@+id/endCal"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/endDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -47,11 +47,11 @@
             android:text="01/30/2019"
             android:fontFamily="@font/normal_font"
             android:textColor="@color/login_form_details_dark"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintStart_toEndOf="@+id/endCal"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/startCal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -71,19 +71,19 @@
             android:fontFamily="@font/normal_font"
             android:text="Start"
             android:textColor="@color/login_form_details_dark"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintStart_toEndOf="@+id/startCal"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/startDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:fontFamily="@font/normal_font"
             android:text="01/28/2019"
             android:textColor="@color/login_form_details_dark"
-            android:fontFamily="@font/normal_font"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintStart_toEndOf="@+id/startCal"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <Button
@@ -100,7 +100,7 @@
             android:text="Show"
             android:textColor="@color/login_form_details"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/endDate"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.github.mikephil.charting.charts.LineChart
