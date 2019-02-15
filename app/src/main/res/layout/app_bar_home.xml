@@ -34,13 +34,14 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     >
+
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
                         android:fontFamily="@font/normal_font"
-                        android:text="Sandiego, UCSD"
+                        android:text="Waiting for Location..."
+                        android:textAlignment="center"
                         android:textColor="#000"
                         android:textSize="18dp"
                         app:fontFamily="@font/sarabun_medium" />
@@ -50,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/normal_font"
-                        android:text="Device not Connected"
+                        android:text="not connected"
                         android:textAlignment="center"
                         android:textColor="@color/middle_gray"
                         android:textSize="15dp"

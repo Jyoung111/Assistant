@@ -34,7 +34,7 @@
                 android:layout_below="@+id/imageView9"
                 android:layout_marginLeft="8dp"
                 android:fontFamily="@font/bold_font"
-                android:text="     ℉"
+                android:text=" 0 ℉"
                 android:textColor="@color/temp_color"
                 android:textSize="25dp" />
 

@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 //    http://remote.ktyri.com:3000/message
 //    teamb-iot.calit2.net
 
-    private static String my_URL = "http://teamb-iot.calit2.net";
+    private static String my_URL = "http://teamb-iot.calit2.net/da";
 
     AppController app ;
 
@@ -846,6 +846,27 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         setCurrentLocation(location, markerTitle, markerSnippet);
 
         mCurrentLocatiion = location;
+
+        try {
+
+            TextView location_title = (TextView) toolbar.findViewById(R.id.title);
+
+            Geocoder geo = new Geocoder(this.getApplicationContext(), Locale.ENGLISH);
+            List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            if (addresses.isEmpty()) {
+                location_title.setText("Waiting for Location...");
+            }
+            else {
+                if (addresses.size() > 0) {
+                    Log.i("adress",""+addresses.get(0));
+                    location_title.setText(addresses.get(0).getFeatureName() + ", " + addresses.get(0).getLocality());
+                }
+            }
+
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -1183,8 +1204,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void setProgressView(String msg){
 
-
-
         StringTokenizer tokens = new StringTokenizer(msg, ",");
         String type = tokens.nextToken();
         int epoch_time  = Integer.parseInt(tokens.nextToken().trim());
@@ -1205,21 +1224,22 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         int cnt = 0;
         for(double now : aqi_arr){
-            if(  0 <= (int)now &&  (int)now >= 50)
+            int now_data = (int)now;
+            if(  0 <= now_data &&  now_data <= 50)
             {
                  cpvArr[cnt].setProgressColor(getResources().getColor(R.color.good));
-            }else if(  51 <= (int)now &&  (int)now >= 100)
+            }else if(  51 <= now_data &&  now_data<= 100)
             {
                 cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Moderate));
-            }else if(  101 <= (int)now &&  (int)now >= 150)
+            }else if(  101 <= now_data &&  now_data <= 150)
             {
                 cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Unhealthy_for_Sensitive_Groups));
             }
-            else if(  151 <= (int)now &&  (int)now >= 200)
+            else if(  151 <= now_data &&  now_data <= 200)
             {
                 cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Unhealthy));
             }
-            else if(  201 <= (int)now &&  (int)now >= 300)
+            else if(  201 <= now_data &&  now_data <= 300)
             {
                 cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Very_Unhealthy));
 
@@ -1231,11 +1251,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             cpvArr[cnt].setProgress((int)aqi_arr[cnt],true);
             cnt++;
         }
-//        so2_progressView.setProgress((int)SN1,true);
-//        pm_progressView.setProgress((int)PM25,true);
-//        no2_progressView.setProgress((int)SN2,true);
-//        co_progressView.setProgress((int)SN3,true);
-//        o3_progressView.setProgress((int)SN4,true);
+
         temperature_text.setText((int)temp+" ℉");
     }
 
