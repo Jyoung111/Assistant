@@ -71,6 +71,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.LocationListener;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -178,6 +179,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static String my_URL = "http://192.168.33.99";
 
     AppController app ;
+
+    //CircleView
+    CircularProgressView so2_progressView, pm_progressView, no2_progressView, co_progressView, o3_progressView ;
 
 
 
@@ -298,6 +302,16 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        });
 
         app = AppController.getInstance();
+
+
+        //CircleView
+        so2_progressView = (CircularProgressView)findViewById(R.id.so2_progressView);
+        pm_progressView = (CircularProgressView)findViewById(R.id.pm_progressView);
+        no2_progressView = (CircularProgressView)findViewById(R.id.no2_progressView);
+        co_progressView = (CircularProgressView)findViewById(R.id.co_progressView);
+        o3_progressView = (CircularProgressView)findViewById(R.id.o3_progressView);
+
+
 
     }
 
@@ -470,7 +484,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     StringTokenizer tokens = new StringTokenizer(readMessage, ",");
-                    Toast.makeText(HomeActivity.this, readMessage, Toast.LENGTH_SHORT).show();
+                    //
+                    // Toast.makeText(HomeActivity.this, readMessage, Toast.LENGTH_SHORT).show();
+
+                    setProgressView(readMessage);
 
 
 //                    int epoch_time  = Integer.parseInt(tokens.nextToken());
@@ -1161,6 +1178,27 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         hrtext.setText(""+app.heartRate);
     }
 
+    private void setProgressView(String msg){
 
+
+        StringTokenizer tokens = new StringTokenizer(msg, ",");
+        String type = tokens.nextToken();
+        int epoch_time  = Integer.parseInt(tokens.nextToken().trim());
+        double temp  = Double.parseDouble(tokens.nextToken().trim());
+        double SN1  = Double.parseDouble(tokens.nextToken().trim());
+        double SN2 = Double.parseDouble(tokens.nextToken().trim());
+        double SN3 = Double.parseDouble(tokens.nextToken().trim());
+        double SN4 = Double.parseDouble(tokens.nextToken().trim());
+        double PM25  = Double.parseDouble(tokens.nextToken().trim());
+
+        Log.w(this.getClass().getName(), "####Received epoch_time: " +epoch_time+" temp: "+temp+" SN1: "+SN1+" SN2: "+SN2+" SN3: "+SN3+" SN4: "+SN4+" PM25: "+PM25);
+
+        so2_progressView.setProgress((int)SN1,true);
+        pm_progressView.setProgress((int)PM25,true);
+        no2_progressView.setProgress((int)SN2,true);
+        co_progressView.setProgress((int)SN3,true);
+        o3_progressView.setProgress((int)SN4,true);
+
+    }
 
 }
