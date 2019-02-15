@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,12 +72,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.LocationListener;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.ToLongBiFunction;
 
 import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST;
@@ -86,6 +100,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
 
+
+    Handler handler = new Handler();
     Intent intent, nav_header_intent;
     private GoogleMap mMap;
     private Toolbar toolbar;
@@ -157,6 +173,13 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     //HeartRate Image variable
     SupportMapFragment mapFragment;
 
+//    http://remote.ktyri.com:3000/message
+
+    private static String my_URL = "http://192.168.33.99";
+
+    AppController app ;
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -201,20 +224,83 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .addApi(LocationServices.API)
                 .build();
 
-//
-//        MapFragment mapFragment = (MapFragment) getFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-
-
         //ImageButton Settings
         heart_btn = (ImageButton)findViewById(R.id.heart_btn);
+
+
         heart_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
 
+        ImageView cloth_img = (ImageView)findViewById(R.id.cloth_img);
+//        cloth_img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Send JSON to Server
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        OutputStream os = null;
+//                        InputStream is = null;
+//                        HttpURLConnection conn = null;
+//                        try {
+//                            //constants
+//                            URL url = new URL(my_URL);
+//                            JSONObject jsonObject = new JSONObject();
+//                            jsonObject.put("type", "realtime");
+//                            jsonObject.put("SO2", "20.203984");
+//                            jsonObject.put("CO", "19.1223423");
+//                            jsonObject.put("NO2", "10.12020");
+//                            jsonObject.put("O3", "15.123124");
+//                            jsonObject.put("PM25", "16.29292929");
+//                            String message = jsonObject.toString();
+//
+//                            conn = (HttpURLConnection) url.openConnection();
+//                            conn.setReadTimeout( 10000 /*milliseconds*/ );
+//                            conn.setConnectTimeout( 15000 /* milliseconds */ );
+//                            conn.setRequestMethod("POST");
+//                            conn.setDoInput(true);
+//                            conn.setDoOutput(true);
+//                            conn.setFixedLengthStreamingMode(message.getBytes().length);
+//
+//                            //make some HTTP header nicety
+//                            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+//                            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+//
+//                            //open
+//                            conn.connect();
+//
+//                            //setup send
+//                            os = new BufferedOutputStream(conn.getOutputStream());
+//                            os.write(message.getBytes());
+//                            //clean up
+//                            os.flush();
+//
+//                            //do somehting with response
+//                            is = conn.getInputStream();
+//                            //String contentAsString = readIt(is,len);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        } finally {
+////                            //clean up
+////                            try {
+////                                os.close();
+////                                is.close();
+////                            } catch (IOException e) {
+////                                e.printStackTrace();
+////                            }
+////
+////                            conn.disconnect();
+//                        }
+//                    }
+//                }).start();
+//            }
+//        });
 
-
+        app = AppController.getInstance();
 
     }
+
 
     private final MyPolarBleReceiver mPolarBleUpdateReceiver = new MyPolarBleReceiver() {
     };
@@ -287,6 +373,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mChatService != null) {
             mChatService.stop();
         }
+        deactivatePolar();
     }
 
     @Override
@@ -323,6 +410,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 checkPermissions();
             }
         }
+
+        WakeupTimer wakeupTimer = new WakeupTimer();
+
     }
 
 
@@ -643,10 +733,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(intent);
                 break;
             case R.id.co_btn:
-                intent = new Intent(this, AirHistoryActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.co2_btn:
                 intent = new Intent(this, AirHistoryActivity.class);
                 startActivity(intent);
                 break;
@@ -1041,6 +1127,38 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
         builder.create().show();
+    }
+
+    //HR Timer Class
+    public class WakeupTimer {
+        Timer timer;
+
+        public WakeupTimer() {
+            timer = new Timer();
+            timer.schedule(new RemindTask(),
+                    0,        //initial delay
+                    2000);  //subsequent rate
+        }
+
+        class RemindTask extends TimerTask {
+            public void run() {
+                app = AppController.getInstance();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setText();
+                    }
+                }, 100);
+
+//                Log.w("test",app.sessionId+" "+app.heartRate+" "+app.lastRRvalue+" "+app.pnnCount+" "+app.pnnPercentage+" "+app.rrThreshold+" "+app.totalNN);
+            }
+        }
+    }
+
+    public void setText(){
+        app = AppController.getInstance();
+        TextView hrtext = (TextView) this.findViewById(R.id.hr_text);
+        hrtext.setText(""+app.heartRate);
     }
 
 

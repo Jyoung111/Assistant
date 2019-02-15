@@ -10,7 +10,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="guideline_gap">32dp</dimen>
-    <dimen name="heart_textsize">18dp</dimen>
+    <dimen name="heart_textsize">23dp</dimen>
     <dimen name="home_airdata_textsize">25dp</dimen>
     <dimen name="home_circle_textsize">17dp</dimen>
     <dimen name="edittext_left_padding">5dp</dimen>

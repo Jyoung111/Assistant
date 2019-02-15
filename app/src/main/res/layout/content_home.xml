@@ -58,7 +58,7 @@
             >
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/cloth_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView10"
@@ -94,7 +94,7 @@
                 android:fontFamily="@font/bold_font"
                 android:text="Thin Cloth"
                 android:textColor="@color/login_form_details_dark"
-                android:layout_below="@id/imageView3"
+                android:layout_below="@id/cloth_img"
                 android:textSize="20dp" />
         </RelativeLayout>
     </LinearLayout>
@@ -102,7 +102,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.2"
+        android:layout_weight="1"
         android:orientation="vertical"
         >
 
@@ -116,58 +116,42 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.4"
-        android:background="@drawable/layout_block_border"
-        android:gravity="center_vertical"
-        >
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1.4"-->
+        <!--android:background="@drawable/layout_block_border"-->
+        <!--android:gravity="center_vertical"-->
+        <!--&gt;-->
 
-        <ImageButton
-            android:id="@+id/heart_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="104dp"
-            android:layout_marginLeft="104dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/heart"
-            android:onClick="onClick" />
+        <!--<ImageButton-->
+            <!--android:id="@+id/heart_btn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="104dp"-->
+            <!--android:layout_marginLeft="104dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:background="@drawable/heart"-->
+            <!--android:onClick="onClick" />-->
 
-        <TextView
-            android:id="@+id/hr_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="3dp"
-            android:text="HR : 109"
-            android:textColor="@color/login_form_details_dark"
-            android:textSize="@dimen/heart_textsize"
-            android:layout_toRightOf="@id/heart_btn"
-            app:fontFamily="@font/bold_font" />
+        <!--<TextView-->
+            <!--android:id="@+id/hr_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="20dp"-->
+            <!--android:layout_marginLeft="20dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginTop="3dp"-->
+            <!--android:text="HR : 109"-->
+            <!--android:textColor="@color/login_form_details_dark"-->
+            <!--android:textSize="@dimen/heart_textsize"-->
+            <!--android:layout_toRightOf="@id/heart_btn"-->
+            <!--app:fontFamily="@font/bold_font" />-->
+        <!---->
 
-        <TextView
-            android:id="@+id/rr_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-
-            android:text="RR : 88.11"
-            android:textColor="@color/login_form_details_dark"
-            android:textSize="@dimen/heart_textsize"
-            android:layout_toRightOf="@id/heart_btn"
-            android:layout_below="@+id/hr_text"
-            app:fontFamily="@font/bold_font"
-            />
-
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -183,6 +167,58 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/layout_block_border"
+                android:gravity="center"
+                >
+
+                    <ImageButton
+                        android:id="@+id/heart_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/heart"
+                        android:onClick="onClick" />
+
+                <TextView
+                    android:id="@+id/hr_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="23dp"
+                    android:layout_marginLeft="20dp"
+
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toRightOf="@id/heart_btn"
+                    android:text="HR"
+                    android:textColor="@color/login_form_details_dark"
+                    android:textSize="13dp"
+                    app:fontFamily="@font/normal_font" />
+
+                <TextView
+                    android:id="@+id/hr_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hr_title"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toRightOf="@id/heart_btn"
+                    android:text="0"
+                    android:textColor="@color/login_form_details_dark"
+                    android:textSize="@dimen/heart_textsize"
+                    app:fontFamily="@font/bold_font" />
+
+            </RelativeLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -242,6 +278,8 @@
                     />
             </RelativeLayout>
 
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -298,61 +336,6 @@
                     app:totalColor="@color/circle_view_outside_color"
                     app:totalWidth="10dp"
                     android:layout_toRightOf="@id/co_btn"
-                    />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/layout_block_border"
-                android:gravity="center_vertical">
-
-                <Button
-                    android:id="@+id/co2_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_row="1"
-                    android:layout_column="0"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@null"
-                    android:fontFamily="@font/normal_font"
-                    android:onClick="onClick"
-                    android:text="CO₂"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/home_airdata_textsize"
-                 />
-
-                <com.vaibhavlakhera.circularprogressview.CircularProgressView
-                    android:id="@+id/co2_progressView"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:animate="true"
-                    app:animateDuration="600"
-                    app:fillColor="@color/login_form_details"
-                    app:progress="130"
-                    app:progressColor="@color/Unhealthy_for_Sensitive_Groups"
-                    app:progressInterpolator="@android:anim/accelerate_decelerate_interpolator"
-                    app:progressRoundCap="true"
-                    app:progressTextColor="@color/login_form_details_dark"
-                    app:progressTextEnabled="true"
-                    app:progressTextSize="@dimen/home_circle_textsize"
-                    app:progressTextType="progress"
-                    app:progressWidth="6dp"
-                    app:startAngle="270"
-                    app:total="500"
-                    app:totalColor="@color/circle_view_outside_color"
-                    app:totalWidth="10dp"
-                    android:layout_toRightOf="@id/co2_btn"
                     />
             </RelativeLayout>
         </LinearLayout>

@@ -37,22 +37,16 @@ public class MyPolarBleReceiver extends BroadcastReceiver {
             int totalNN = Integer.parseInt(tokens.nextToken());
             int lastRRvalue = Integer.parseInt(tokens.nextToken());
             String sessionId = tokens.nextToken();
-            Log.w(this.getClass().getName(), "####Received heartRate: " +heartRate+" pnnPercentage: "+pnnPercentage+" pnnCount: "+pnnCount+" rrThreshold: "+rrThreshold+" totalNN: "+totalNN+" lastRRvalue: "+lastRRvalue+" sessionId: "+sessionId);
+//            Log.w(this.getClass().getName(), "####Received heartRate: " +heartRate+" pnnPercentage: "+pnnPercentage+" pnnCount: "+pnnCount+" rrThreshold: "+rrThreshold+" totalNN: "+totalNN+" lastRRvalue: "+lastRRvalue+" sessionId: "+sessionId);
 
-
-
-//              StringTokenizer tokens = new StringTokenizer(data, ",");
-//            int epoch_time  = Integer.parseInt(tokens.nextToken());
-//            double temp  = Double.parseDouble(tokens.nextToken());
-//            double SN1  = Double.parseDouble(tokens.nextToken());
-//            double SN2 = Double.parseDouble(tokens.nextToken());
-//            double SN3 = Double.parseDouble(tokens.nextToken());
-//            double SN4 = Double.parseDouble(tokens.nextToken());
-//            double PM25  = Double.parseDouble(tokens.nextToken());
-//            String sessionId = tokens.nextToken();
-//            Log.w(this.getClass().getName(), "####Received epoch_time: " +epoch_time+" temp: "+temp+" SN1: "+SN1+" SN2: "+SN2+" SN3: "+SN3+" SN4: "+SN4+" PM25: "+PM25);
-
-
+            AppController app = AppController.getInstance();
+            app.heartRate = heartRate ;
+            app.pnnPercentage = pnnPercentage ;
+            app.pnnCount = pnnCount ;
+            app.rrThreshold = rrThreshold ;
+            app.totalNN = totalNN ;
+            app.lastRRvalue = lastRRvalue ;
+            app.sessionId = sessionId ;
 
         }
     }
