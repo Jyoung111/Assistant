@@ -80,6 +80,7 @@ public class AirHistoryActivity extends AppCompatActivity {
 
         LineData data = new LineData(dataset);
         chart.setData(data);
+        chart.animateXY(1000, 1000);
 
         //DatePicker Settings
         ImageView startCal = (ImageView) findViewById(R.id.startCal);
