@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -175,14 +176,16 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     SupportMapFragment mapFragment;
 
 //    http://remote.ktyri.com:3000/message
+//    teamb-iot.calit2.net
 
-    private static String my_URL = "http://192.168.33.99";
+    private static String my_URL = "http://teamb-iot.calit2.net";
 
     AppController app ;
 
     //CircleView
     CircularProgressView so2_progressView, pm_progressView, no2_progressView, co_progressView, o3_progressView ;
 
+    TextView temperature_text ;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -235,71 +238,71 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         heart_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
 
         ImageView cloth_img = (ImageView)findViewById(R.id.cloth_img);
-//        cloth_img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Send JSON to Server
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        OutputStream os = null;
-//                        InputStream is = null;
-//                        HttpURLConnection conn = null;
-//                        try {
-//                            //constants
-//                            URL url = new URL(my_URL);
-//                            JSONObject jsonObject = new JSONObject();
-//                            jsonObject.put("type", "realtime");
-//                            jsonObject.put("SO2", "20.203984");
-//                            jsonObject.put("CO", "19.1223423");
-//                            jsonObject.put("NO2", "10.12020");
-//                            jsonObject.put("O3", "15.123124");
-//                            jsonObject.put("PM25", "16.29292929");
-//                            String message = jsonObject.toString();
-//
-//                            conn = (HttpURLConnection) url.openConnection();
-//                            conn.setReadTimeout( 10000 /*milliseconds*/ );
-//                            conn.setConnectTimeout( 15000 /* milliseconds */ );
-//                            conn.setRequestMethod("POST");
-//                            conn.setDoInput(true);
-//                            conn.setDoOutput(true);
-//                            conn.setFixedLengthStreamingMode(message.getBytes().length);
-//
-//                            //make some HTTP header nicety
-//                            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-//                            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-//
-//                            //open
-//                            conn.connect();
-//
-//                            //setup send
-//                            os = new BufferedOutputStream(conn.getOutputStream());
-//                            os.write(message.getBytes());
-//                            //clean up
-//                            os.flush();
-//
-//                            //do somehting with response
+        cloth_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Send JSON to Server
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        OutputStream os = null;
+                        InputStream is = null;
+                        HttpURLConnection conn = null;
+                        try {
+                            //constants
+                            URL url = new URL(my_URL);
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("type", "realtime");
+                            jsonObject.put("SO2", "20.203984");
+                            jsonObject.put("CO", "19.1223423");
+                            jsonObject.put("NO2", "10.12020");
+                            jsonObject.put("O3", "15.123124");
+                            jsonObject.put("PM25", "16.29292929");
+                            String message = jsonObject.toString();
+
+                            conn = (HttpURLConnection) url.openConnection();
+                            conn.setReadTimeout( 10000 /*milliseconds*/ );
+                            conn.setConnectTimeout( 15000 /* milliseconds */ );
+                            conn.setRequestMethod("POST");
+                            conn.setDoInput(true);
+                            conn.setDoOutput(true);
+                            conn.setFixedLengthStreamingMode(message.getBytes().length);
+
+                            //make some HTTP header nicety
+                            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+                            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+
+                            //open
+                            conn.connect();
+
+                            //setup send
+                            os = new BufferedOutputStream(conn.getOutputStream());
+                            os.write(message.getBytes());
+                            //clean up
+                            os.flush();
+
+                            //do somehting with response
 //                            is = conn.getInputStream();
-//                            //String contentAsString = readIt(is,len);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        } finally {
-////                            //clean up
-////                            try {
-////                                os.close();
-////                                is.close();
-////                            } catch (IOException e) {
-////                                e.printStackTrace();
-////                            }
-////
-////                            conn.disconnect();
-//                        }
-//                    }
-//                }).start();
-//            }
-//        });
+                            //String contentAsString = readIt(is,len);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } finally {
+//                            //clean up
+//                            try {
+//                                os.close();
+//                                is.close();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                            conn.disconnect();
+                        }
+                    }
+                }).start();
+            }
+        });
 
         app = AppController.getInstance();
 
@@ -312,7 +315,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         o3_progressView = (CircularProgressView)findViewById(R.id.o3_progressView);
 
 
-
+        temperature_text = (TextView)findViewById(R.id.temperature_text);
     }
 
 
@@ -1181,6 +1184,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void setProgressView(String msg){
 
 
+
         StringTokenizer tokens = new StringTokenizer(msg, ",");
         String type = tokens.nextToken();
         int epoch_time  = Integer.parseInt(tokens.nextToken().trim());
@@ -1191,14 +1195,48 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         double SN4 = Double.parseDouble(tokens.nextToken().trim());
         double PM25  = Double.parseDouble(tokens.nextToken().trim());
 
+        double  [] aqi_arr = {SN1, SN2,SN3,SN4,PM25};
+
+        CircularProgressView  [] cpvArr  = {so2_progressView,pm_progressView,no2_progressView,co_progressView,o3_progressView};
+
+
+
         Log.w(this.getClass().getName(), "####Received epoch_time: " +epoch_time+" temp: "+temp+" SN1: "+SN1+" SN2: "+SN2+" SN3: "+SN3+" SN4: "+SN4+" PM25: "+PM25);
 
-        so2_progressView.setProgress((int)SN1,true);
-        pm_progressView.setProgress((int)PM25,true);
-        no2_progressView.setProgress((int)SN2,true);
-        co_progressView.setProgress((int)SN3,true);
-        o3_progressView.setProgress((int)SN4,true);
+        int cnt = 0;
+        for(double now : aqi_arr){
+            if(  0 <= (int)now &&  (int)now >= 50)
+            {
+                 cpvArr[cnt].setProgressColor(getResources().getColor(R.color.good));
+            }else if(  51 <= (int)now &&  (int)now >= 100)
+            {
+                cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Moderate));
+            }else if(  101 <= (int)now &&  (int)now >= 150)
+            {
+                cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Unhealthy_for_Sensitive_Groups));
+            }
+            else if(  151 <= (int)now &&  (int)now >= 200)
+            {
+                cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Unhealthy));
+            }
+            else if(  201 <= (int)now &&  (int)now >= 300)
+            {
+                cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Very_Unhealthy));
 
+            }
+            else
+            {
+                cpvArr[cnt].setProgressColor(getResources().getColor(R.color.Hazardous));
+            }
+            cpvArr[cnt].setProgress((int)aqi_arr[cnt],true);
+            cnt++;
+        }
+//        so2_progressView.setProgress((int)SN1,true);
+//        pm_progressView.setProgress((int)PM25,true);
+//        no2_progressView.setProgress((int)SN2,true);
+//        co_progressView.setProgress((int)SN3,true);
+//        o3_progressView.setProgress((int)SN4,true);
+        temperature_text.setText((int)temp+" ℉");
     }
 
 }
