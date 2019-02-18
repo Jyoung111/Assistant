@@ -351,6 +351,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         Receive_json receive_json = new Receive_json();
         receive_json.getResponseOf(this, jsonObject);
 
+
+
     }
 
 

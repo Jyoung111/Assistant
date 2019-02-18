@@ -21,6 +21,14 @@ public class Receive_json {
 
     ProgressDialog waitingDialog;
     Handler handler = new Handler();
+    JSONObject jsonObject;
+
+    private static Receive_json instance = new Receive_json();
+    public static Receive_json getInstance() {
+        return instance;
+    }
+
+
     public JSONObject getResponseOf(Context ctx, JSONObject sendMsg) {
         try {
             waitingDialog = new ProgressDialog(ctx);
@@ -67,7 +75,7 @@ public class Receive_json {
                 httpURLConnection = (HttpURLConnection) new URL(url).openConnection();
                 httpURLConnection.setReadTimeout(3000 /*milliseconds*/);
                 httpURLConnection.setConnectTimeout(5000 /* milliseconds */);
-                httpURLConnection.setRequestMethod("GET");
+                httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 //make some HTTP header nicety
@@ -100,7 +108,7 @@ public class Receive_json {
                     httpURLConnection.disconnect();
                 }
             }
-            JSONObject jsonObject;
+
             try {
                 jsonObject = new JSONObject(new String(data));
             } catch (Exception ex) {
