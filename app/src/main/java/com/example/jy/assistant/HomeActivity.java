@@ -81,6 +81,7 @@ import org.w3c.dom.Text;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -178,7 +179,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 //    http://remote.ktyri.com:3000/message
 //    teamb-iot.calit2.net
 
-    private static String my_URL = "http://teamb-iot.calit2.net/da";
+    private static String my_URL = "http://teamb-iot.calit2.net";
 
     AppController app ;
 
@@ -187,6 +188,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     TextView temperature_text ;
 
+
+    JSONObject jsonObject;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -245,50 +248,52 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        OutputStream os = null;
-                        InputStream is = null;
-                        HttpURLConnection conn = null;
-                        try {
-                            //constants
-                            URL url = new URL(my_URL);
-                            JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("type", "realtime");
-                            jsonObject.put("SO2", "20.203984");
-                            jsonObject.put("CO", "19.1223423");
-                            jsonObject.put("NO2", "10.12020");
-                            jsonObject.put("O3", "15.123124");
-                            jsonObject.put("PM25", "16.29292929");
-                            String message = jsonObject.toString();
 
-                            conn = (HttpURLConnection) url.openConnection();
-                            conn.setReadTimeout( 10000 /*milliseconds*/ );
-                            conn.setConnectTimeout( 15000 /* milliseconds */ );
-                            conn.setRequestMethod("POST");
-                            conn.setDoInput(true);
-                            conn.setDoOutput(true);
-                            conn.setFixedLengthStreamingMode(message.getBytes().length);
 
-                            //make some HTTP header nicety
-                            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-                            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-
-                            //open
-                            conn.connect();
-
-                            //setup send
-                            os = new BufferedOutputStream(conn.getOutputStream());
-                            os.write(message.getBytes());
-                            //clean up
-                            os.flush();
-
-                            //do somehting with response
+//                        OutputStream os = null;
+//                        InputStream is = null;
+//                        HttpURLConnection conn = null;
+//                        try {
+//                            //constants
+//                            URL url = new URL(my_URL);
+//                            JSONObject jsonObject = new JSONObject();
+//                            jsonObject.put("type", "realtime");
+//                            jsonObject.put("SO2", "20.203984");
+//                            jsonObject.put("CO", "19.1223423");
+//                            jsonObject.put("NO2", "10.12020");
+//                            jsonObject.put("O3", "15.123124");
+//                            jsonObject.put("PM25", "16.29292929");
+//                            String message = jsonObject.toString();
+//
+//                            conn = (HttpURLConnection) url.openConnection();
+//                            conn.setReadTimeout( 10000 /*milliseconds*/ );
+//                            conn.setConnectTimeout( 15000 /* milliseconds */ );
+//                            conn.setRequestMethod("POST");
+//                            conn.setDoInput(true);
+//                            conn.setDoOutput(true);
+//                            conn.setFixedLengthStreamingMode(message.getBytes().length);
+//
+//                            //make some HTTP header nicety
+//                            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+//                            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+//
+//                            //open
+//                            conn.connect();
+//
+//                            //setup send
+//                            os = new BufferedOutputStream(conn.getOutputStream());
+//                            os.write(message.getBytes());
+//                            //clean up
+//                            os.flush();
+//
+//                            //do somehting with response
 //                            is = conn.getInputStream();
-                            //String contentAsString = readIt(is,len);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } finally {
+//
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        } finally {
 //                            //clean up
 //                            try {
 //                                os.close();
@@ -296,9 +301,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                            } catch (IOException e) {
 //                                e.printStackTrace();
 //                            }
-//
 //                            conn.disconnect();
-                        }
+//                        }
                     }
                 }).start();
             }
@@ -316,6 +320,37 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         temperature_text = (TextView)findViewById(R.id.temperature_text);
+
+
+        //Receive JSON
+
+
+        try {
+            jsonObject = new JSONObject();
+//            jsonObject.put("type", "realtime");
+//            jsonObject.put("SO2", "20.203984");
+//            jsonObject.put("CO", "19.1223423");
+//            jsonObject.put("NO2", "10.12020");
+//            jsonObject.put("O3", "15.123124");
+//            jsonObject.put("PM25", "16.29292929");
+
+//            fname,lname,hash_pwd,sex,admin,hash,active
+            jsonObject.put("e_mail", "sjhwan2301@gmail.com");
+            jsonObject.put("fname", "fname");
+            jsonObject.put("lname", "lname");
+            jsonObject.put("hash_pwd", "hash_pwd");
+            jsonObject.put("sex", "m");
+            jsonObject.put("admin", 0);
+            jsonObject.put("hash", "hash");
+            jsonObject.put("active", 0);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Receive_json receive_json = new Receive_json();
+        receive_json.getResponseOf(this, jsonObject);
+
     }
 
 
