@@ -25,6 +25,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     Handler handler = new Handler();
     JSONObject jsonObject, forgotPassword_result_json;
     String url = "http://teamb-iot.calit2.net/da/forgotchangepwAndroid";
+    WakeupTimer wakeupTimer;
+    boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +67,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         forgotPassword_result_json = receive_json.getResponseOf(ForgotPasswordActivity.this, jsonObject, url);
 
                         if (forgotPassword_result_json.getString("success_or_fail").equals("emailsuccess")) {
-
-                            WakeupTimer wakeupTimer = new WakeupTimer();
+                            Toast.makeText(ForgotPasswordActivity.this, "Email sent.", Toast.LENGTH_SHORT).show();
+                            wakeupTimer = new WakeupTimer();
 
                         } else {
                             Toast.makeText(ForgotPasswordActivity.this, "Email is not exist.", Toast.LENGTH_SHORT).show();
@@ -90,7 +92,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             timer = new Timer();
             timer.schedule(new RemindTask(),
                     0,        //initial delay
-                    500);  //subsequent rate
+                    1000);  //subsequent rate
         }
 
         class RemindTask extends TimerTask {
@@ -99,7 +101,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+
                         jsonObject = new JSONObject();
+                        url = "http://teamb-iot.calit2.net/da/forgotchangepwAndroid";
                         try {
                             jsonObject.put("type", "FPE-REQ");
                             jsonObject.put("e_mail", email.getText());
@@ -109,17 +113,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             forgotPassword_result_json = receive_json.getResponseOf(ForgotPasswordActivity.this, jsonObject, url);
 
                             if (forgotPassword_result_json.getString("success_or_fail").equals("clicksuccess")) {
-
-
+                                Intent intent = new Intent(ForgotPasswordActivity.this, ChangePasswordActivity.class);
+                                intent.putExtra("email",email.getText().toString());
+                                startActivity(intent);
+                                flag = true;
                             } else {
-                                Toast.makeText(ForgotPasswordActivity.this, "Check your Authentication Email", Toast.LENGTH_SHORT).show();
+                                //
                             }
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-
+                        if(flag) cancel();
 
                     }
                 }, 100);
