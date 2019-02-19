@@ -322,37 +322,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         temperature_text = (TextView)findViewById(R.id.temperature_text);
 
 
-        //Receive JSON
-
-
-        try {
-            jsonObject = new JSONObject();
-//            jsonObject.put("type", "realtime");
-//            jsonObject.put("SO2", "20.203984");
-//            jsonObject.put("CO", "19.1223423");
-//            jsonObject.put("NO2", "10.12020");
-//            jsonObject.put("O3", "15.123124");
-//            jsonObject.put("PM25", "16.29292929");
-
-//            fname,lname,hash_pwd,sex,admin,hash,active
-            jsonObject.put("e_mail", "sjhwan2301@gmail.com");
-            jsonObject.put("fname", "fname");
-            jsonObject.put("lname", "lname");
-            jsonObject.put("hash_pwd", "hash_pwd");
-            jsonObject.put("sex", "m");
-            jsonObject.put("admin", 0);
-            jsonObject.put("hash", "hash");
-            jsonObject.put("active", 0);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Receive_json receive_json = new Receive_json();
-        receive_json.getResponseOf(this, jsonObject);
-
-
-
     }
 
 
@@ -824,7 +793,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             // Reset out string buffer to zero and clear the edit text field
             mOutStringBuffer.setLength(0);
-            Toast.makeText(HomeActivity.this, "test", Toast.LENGTH_SHORT);
+            Toast.makeText(HomeActivity.this, "signup_result_json", Toast.LENGTH_SHORT);
         }
     }
 
@@ -1228,7 +1197,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 }, 100);
 
-//                Log.w("test",app.sessionId+" "+app.heartRate+" "+app.lastRRvalue+" "+app.pnnCount+" "+app.pnnPercentage+" "+app.rrThreshold+" "+app.totalNN);
+//                Log.w("signup_result_json",app.sessionId+" "+app.heartRate+" "+app.lastRRvalue+" "+app.pnnCount+" "+app.pnnPercentage+" "+app.rrThreshold+" "+app.totalNN);
             }
         }
     }

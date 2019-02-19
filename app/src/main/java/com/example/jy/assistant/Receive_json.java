@@ -21,7 +21,8 @@ public class Receive_json {
 
     ProgressDialog waitingDialog;
     Handler handler = new Handler();
-    JSONObject jsonObject;
+    JSONObject jsonObject = new JSONObject();
+    String url = "";
 
     private static Receive_json instance = new Receive_json();
     public static Receive_json getInstance() {
@@ -29,30 +30,31 @@ public class Receive_json {
     }
 
 
-    public JSONObject getResponseOf(Context ctx, JSONObject sendMsg) {
+    public JSONObject getResponseOf(Context ctx, JSONObject sendMsg,String url) {
+        this.url = url;
         try {
-            waitingDialog = new ProgressDialog(ctx);
-            waitingDialog.setMessage("Now loading...");
-            waitingDialog.setIndeterminate(false);
-            waitingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            waitingDialog.setCancelable(false);
-            waitingDialog.show();
-
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    waitingDialog.dismiss();
-                }
-            }, 1500);
+//            waitingDialog = new ProgressDialog(ctx);
+//            waitingDialog.setMessage("Now loading...");
+//            waitingDialog.setIndeterminate(false);
+//            waitingDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            waitingDialog.setCancelable(false);
+//            waitingDialog.show();
+//
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    waitingDialog.dismiss();
+//                }
+//            }, 1500);
 
             DisplayLoadingComm dlc = new DisplayLoadingComm();
             JSONObject receivedMsg = dlc.execute(sendMsg).get();
 
-            Log.w("kitty received from svr", receivedMsg.toString());
+            Log.w("test received from svr", receivedMsg.toString());
             return receivedMsg;
         } catch (Exception ex) {
             ex.printStackTrace();
-            Log.w("kitty", "Transmit failed....");
+            Log.w("test", "Transmit failed....");
             return null;
         }
     }
@@ -69,7 +71,6 @@ public class Receive_json {
             String data = "";
 
             HttpURLConnection httpURLConnection = null;
-            String url = "http://teamb-iot.calit2.net/da/signupAndroid";
             String msg = jsonObjects[0].toString();
             try {
                 httpURLConnection = (HttpURLConnection) new URL(url).openConnection();
@@ -89,7 +90,7 @@ public class Receive_json {
                 wr.writeBytes(msg);
                 wr.flush();
                 wr.close();
-                Log.w("kitty", "Data sent...." + msg);
+                Log.w("test", "Data sent...." + msg);
 
                 InputStream in = httpURLConnection.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(in);
@@ -100,7 +101,7 @@ public class Receive_json {
                     inputStreamData = inputStreamReader.read();
                     data += current;
                 }
-                Log.w("kitty", "Data received...." + data.toString());
+                Log.w("test", "Data received...." + data.toString());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -114,7 +115,7 @@ public class Receive_json {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 jsonObject = null;
-                Log.w("kitty", "Transmit failed....21213");
+                Log.w("test", "Transmit failed....");
             }
             return jsonObject;
         }
