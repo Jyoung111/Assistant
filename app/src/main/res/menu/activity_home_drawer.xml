@@ -2,7 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    >
 
     <group android:checkableBehavior="single">
         <item
@@ -17,9 +18,9 @@
             android:title="Air Quality Index" />
 
         <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/logout"
-            android:title="Logout" />
+            android:id="@+id/nav_login_logout"
+            android:icon="@drawable/login"
+            android:title="Login" />
 
 
         <!--<item-->

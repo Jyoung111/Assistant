@@ -2,40 +2,30 @@ package com.example.jy.assistant;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -46,8 +36,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,43 +48,23 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.location.LocationListener;
-import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.function.ToLongBiFunction;
-
-import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST;
-import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED;
 
 public class HomeActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -191,6 +159,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     JSONObject jsonObject;
 
+
+    private ActionBarDrawerToggle mDrawerToggle;
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,8 +180,30 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
+
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //Save Login data
+        SharedPreferences prefs = getSharedPreferences("activity_login",0);
+        String saved_email = prefs.getString("email","");
+        String saved_pwd = prefs.getString("password","");
+        if(saved_email.equals("") && saved_pwd.equals("")){
+            //Not Login
+            navigationView.getMenu().findItem(R.id.nav_login_logout).setIcon(R.drawable.login);
+            navigationView.getMenu().findItem(R.id.nav_login_logout).setTitle("Login");
+        }else{
+            //Now Login Status
+            navigationView.getMenu().findItem(R.id.nav_login_logout).setIcon(R.drawable.logout);
+            navigationView.getMenu().findItem(R.id.nav_login_logout).setTitle("Logout");
+        }
+
+
+
 
 
         //Google Map
@@ -320,6 +313,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         temperature_text = (TextView)findViewById(R.id.temperature_text);
+
+
+
+
 
 
     }
@@ -693,6 +690,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -704,6 +702,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
+
+
+
         return true;
     }
 
@@ -737,7 +738,26 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else if (id == R.id.nav_aqi) {
             nav_header_intent = new Intent(this, AQI_IndexActivity.class);
             startActivity(nav_header_intent);
-        } else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_login_logout) {
+
+            //Show Dialog
+
+
+                Status.USN = -1;
+                Status.EMAIL = "";
+
+                //Current Login Data Reset
+                SharedPreferences prefs = getSharedPreferences("activity_login",0);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear();
+                editor.commit();
+
+                nav_header_intent = new Intent(this, LoginActivity.class);
+                startActivity(nav_header_intent);
+
+
+
+
         }
 //        else if (id == R.id.nav_settings) {
 //

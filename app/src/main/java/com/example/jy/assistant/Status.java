@@ -4,5 +4,5 @@ public class Status {
 
     //Current User Login info
     static int USN = -1;
-    static String email = "";
+    static String EMAIL = "";
 }

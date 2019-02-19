@@ -1,6 +1,7 @@
 package com.example.jy.assistant;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,12 +60,19 @@ public class LoginActivity extends AppCompatActivity {
                             if (signin_result_json.getString("success_or_fail").equals("verifysuccess")) {
 
                                 Status.USN = signin_result_json.getInt("user_seq_num");
-                                Status.email = email.getText().toString();
+                                Status.EMAIL = email.getText().toString();
 
                                 intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
 
-                                Log.w("Receive", "" + Status.USN + " " + "" + Status.email);
+                                //Save Login data
+                                SharedPreferences prefs = getSharedPreferences("activity_login",0);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString("email",email.getText().toString());
+                                editor.putString("password",password.getText().toString());
+                                editor.apply();
+
+                                Log.w("Receive", "" + Status.USN + " " + "" + Status.EMAIL);
 
                             } else if (signin_result_json.getString("success_or_fail").equals("activefail")){
                                 Toast.makeText(LoginActivity.this, "Activation need to verify", Toast.LENGTH_SHORT).show();
