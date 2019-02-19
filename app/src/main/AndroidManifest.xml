@@ -40,7 +40,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".DeleteAccountActivity" />
-        <activity android:name=".FindPasswordActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
         <activity
             android:name=".HomeActivity"
             android:label=""

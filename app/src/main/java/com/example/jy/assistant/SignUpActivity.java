@@ -100,19 +100,19 @@ public class SignUpActivity extends AppCompatActivity {
                 fname_str = fname.getText().toString().trim();
                 last_name_str = last_name.getText().toString().trim();
 
-                if(email_str.isEmpty()  || password_str.isEmpty()  || password_confirm_str.isEmpty()  || fname_str.isEmpty()  ||last_name_str.isEmpty() ||!radioButton_man.isChecked() || !radioButton_woman.isChecked() ) {
+                if(email_str.isEmpty()  || password_str.isEmpty()  || password_confirm_str.isEmpty()  || fname_str.isEmpty()  ||last_name_str.isEmpty() ||  !( radioButton_man.isChecked() || radioButton_woman.isChecked() )   ) {
                     if(email_str.isEmpty()) {
-                        Toast.makeText(SignUpActivity.this, "Input your e-mail.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Input your E-mail Address.",Toast.LENGTH_SHORT).show();
                     }else if(password_str.isEmpty()  ){
-                        Toast.makeText(SignUpActivity.this, "Input your password.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Input your Password.",Toast.LENGTH_SHORT).show();
                     }else if( password_confirm_str.isEmpty() ){
-                        Toast.makeText(SignUpActivity.this, "Input your password confirm.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Input your Password Confirmation.",Toast.LENGTH_SHORT).show();
                     }
                     else if(fname_str.isEmpty()){
-                        Toast.makeText(SignUpActivity.this, "Input your first name.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Input your First Name.",Toast.LENGTH_SHORT).show();
                     }
                     else if(last_name_str.isEmpty()){
-                        Toast.makeText(SignUpActivity.this, "Input your last name.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, "Input your Last Name.",Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(SignUpActivity.this, "Check your sex",Toast.LENGTH_SHORT).show();
                     }
@@ -134,13 +134,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 Receive_json receive_json = new Receive_json();
                                 signup_result_json = receive_json.getResponseOf(SignUpActivity.this, jsonObject,url);
 
-                                if(signup_result_json.getString("success_or_fail").equals("success")){
-                                    Toast.makeText(SignUpActivity.this, "Send Authentication E-mail.",Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }else{
-                                    Toast.makeText(SignUpActivity.this, "E-mail Duplicated.",Toast.LENGTH_SHORT).show();
+                                if(signup_result_json != null) {
+                                    if (signup_result_json.getString("success_or_fail").equals("success")) {
+                                        Toast.makeText(SignUpActivity.this, "Send Authentication E-mail.", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    } else {
+                                        Toast.makeText(SignUpActivity.this, "Input email is already exist.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
