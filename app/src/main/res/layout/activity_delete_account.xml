@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <EditText
-        android:id="@+id/fname"
+        android:id="@+id/password_confirm"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
@@ -87,14 +87,14 @@
         app:layout_constraintTop_toBottomOf="@+id/password_confirm_text" />
 
     <Button
-        android:id="@+id/btn_password_change"
+        android:id="@+id/btn_delete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/btn_delete_account"
         android:text="Delete Account"
         android:textAllCaps="false"
@@ -102,7 +102,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/fname" />
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm" />
 
 
 
