@@ -67,11 +67,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         forgotPassword_result_json = receive_json.getResponseOf(ForgotPasswordActivity.this, jsonObject, url);
 
                         if (forgotPassword_result_json.getString("success_or_fail").equals("emailsuccess")) {
-                            Toast.makeText(ForgotPasswordActivity.this, "Email sent.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ForgotPasswordActivity.this, "E-mail has been sent.", Toast.LENGTH_SHORT).show();
                             wakeupTimer = new WakeupTimer();
 
                         } else {
-                            Toast.makeText(ForgotPasswordActivity.this, "Email is not exist.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ForgotPasswordActivity.this, "E-mail is not exist.", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (JSONException e) {
@@ -114,7 +114,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                             if (forgotPassword_result_json.getString("success_or_fail").equals("clicksuccess")) {
                                 Intent intent = new Intent(ForgotPasswordActivity.this, ChangePasswordActivity.class);
-                                intent.putExtra("email",email.getText().toString());
+                                intent.putExtra("email",email.getText().toString().trim());
                                 startActivity(intent);
                                 flag = true;
                             } else {

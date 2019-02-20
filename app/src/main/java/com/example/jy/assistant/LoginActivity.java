@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = prefs.edit();
                                 editor.putString("email",email.getText().toString());
                                 editor.putString("password",password.getText().toString());
+                                editor.putInt("USN",Status.USN);
                                 editor.apply();
 
                                 Log.w("Receive", "" + Status.USN + " " + "" + Status.EMAIL);

@@ -34,17 +34,6 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-//        check_btn = (ImageButton) findViewById(R.id.check_btn);
-//        check_text = (TextView) findViewById(R.id.check_text);
-//        check_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                check_text.setVisibility(View.VISIBLE);
-//                check_text.setText("Clear!");
-//                check_text.setTextColor(Color.parseColor("#008000"));
-//            }
-//        });
-
         //
         //ActionBar Setting
         //

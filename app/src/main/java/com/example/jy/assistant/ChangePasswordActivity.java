@@ -19,7 +19,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     String email, pwd_str,pwd_confirm_str;
     Button btn_password_change ;
     EditText password, password_confirm;
-    JSONObject jsonObject, forgotPassword_result_json;
+    JSONObject jsonObject, changePassword_result_json;
     String url = "http://teamb-iot.calit2.net/da/forgotchangepwAndroid2";
 
     @Override
@@ -73,9 +73,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             jsonObject.put("new_pwd", password.getText());
 
                             Receive_json receive_json = new Receive_json();
-                            forgotPassword_result_json = receive_json.getResponseOf(ChangePasswordActivity.this, jsonObject, url);
+                            changePassword_result_json = receive_json.getResponseOf(ChangePasswordActivity.this, jsonObject, url);
 
-                            if (forgotPassword_result_json.getString("success_or_fail").equals("changesuccess")) {
+                            if (changePassword_result_json.getString("success_or_fail").equals("changesuccess")) {
                                 Intent intent = new Intent(ChangePasswordActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 Toast.makeText(ChangePasswordActivity.this, "Success password change.", Toast.LENGTH_SHORT).show();

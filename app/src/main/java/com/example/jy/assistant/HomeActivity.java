@@ -314,8 +314,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         temperature_text = (TextView)findViewById(R.id.temperature_text);
 
-
-
+        //Timer
+        WakeupTimer wakeupTimer = new WakeupTimer();
 
 
 
@@ -431,7 +431,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
 
-        WakeupTimer wakeupTimer = new WakeupTimer();
+
 
     }
 
