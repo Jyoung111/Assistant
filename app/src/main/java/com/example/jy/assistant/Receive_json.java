@@ -101,7 +101,7 @@ public class Receive_json {
                     inputStreamData = inputStreamReader.read();
                     data += current;
                 }
-                Log.w("test", "Data received...." + data.toString());
+                Log.w("test", "Data received...." + data);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {

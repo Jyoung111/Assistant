@@ -43,6 +43,8 @@ public class AirHistoryActivity extends AppCompatActivity {
     String date = "";
     LineChart chart;
     ArrayList<Entry> entries1,entries2,entries3,entries4,entries5;
+    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+    LineDataSet set1,set2,set3,set4,set5;
 
 
     @Override
@@ -72,6 +74,7 @@ public class AirHistoryActivity extends AppCompatActivity {
         entries3 = new ArrayList<>();
         entries4 = new ArrayList<>();
         entries5 = new ArrayList<>();
+        dataSets = new ArrayList<>();
 
         show_btn = (Button)findViewById(R.id.show_btn);
         show_btn.setOnClickListener(new View.OnClickListener() {
@@ -111,42 +114,35 @@ public class AirHistoryActivity extends AppCompatActivity {
                                     o3 = actor.getInt("AQI_O3");
 
 
+                                    //Save Chart Data
                                     entries1.add(new Entry(i,(float)pm));
                                     entries2.add(new Entry(i,(float)co));
                                     entries3.add(new Entry(i,(float)so2));
                                     entries4.add(new Entry(i,(float)no2));
                                     entries5.add(new Entry(i,(float)o3));
 
-                                    Log.w("select-data",date +" "+pm+" "+co+" "+so2+" "+no2+" "+o3+" ");
-
-//                                    Log.w("select-data", String.valueOf(actor));
-
                                 }
 
 
-                                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-                                LineDataSet set1 = new LineDataSet(entries1, "PM2.5");
-//                                chartData.addDataSet(set1);
+
+                                set1 = new LineDataSet(entries1, "PM2.5");
                                 dataSets.add(set1);
 
-                                LineDataSet set2 = new LineDataSet(entries2, "CO");
-//                                chartData.addDataSet(set2);
-                                dataSets.add(set2);
-
-                                LineDataSet set3 = new LineDataSet(entries3, "SO2");
-//                                chartData.addDataSet(set3);
-                                dataSets.add(set3);
-
-                                LineDataSet set4 = new LineDataSet(entries4, "NO2");
-//                                chartData.addDataSet(set4);
-                                dataSets.add(set4);
-
-                                LineDataSet set5 = new LineDataSet(entries5, "O3");
-//                                chartData.addDataSet(set5);
-                                dataSets.add(set5);
+//                                LineDataSet set2 = new LineDataSet(entries2, "CO");
+//                                dataSets.add(set2);
+//
+//                                LineDataSet set3 = new LineDataSet(entries3, "SO2");
+//                                dataSets.add(set3);
+//
+//                                LineDataSet set4 = new LineDataSet(entries4, "NO2");
+//                                dataSets.add(set4);
+//
+//                                LineDataSet set5 = new LineDataSet(entries5, "O3");
+//                                dataSets.add(set5);
 
                                 LineData chartData = new LineData(dataSets);
+                                chart.clear();
                                 chart.setData(chartData);
                                 chart.animateXY(1000, 1000);
                                 chart.invalidate();
@@ -183,12 +179,12 @@ public class AirHistoryActivity extends AppCompatActivity {
 
 
         ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(4f, 0));
-        entries.add(new Entry(8f, 1));
-        entries.add(new Entry(6f, 2));
-        entries.add(new Entry(12f, 3));
-        entries.add(new Entry(18f, 4));
-        entries.add(new Entry(9f, 5));
+        entries.add(new Entry(0, 0));
+        entries.add(new Entry(1, 1));
+        entries.add(new Entry(2, 2));
+        entries.add(new Entry(3, 3));
+        entries.add(new Entry(4, 4));
+        entries.add(new Entry(5, 5));
 
         LineDataSet dataset = new LineDataSet(entries, "PM2.5");
 
