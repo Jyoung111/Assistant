@@ -209,6 +209,7 @@ public class AirHistoryActivity extends AppCompatActivity {
             }
         });
 
+
         endCal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
