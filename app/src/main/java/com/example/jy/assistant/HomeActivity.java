@@ -57,9 +57,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -71,6 +75,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
 
+
+    String url = "http://teamb-iot.calit2.net/da/receiveSensorData";
+    JSONObject jsonObject, sensor_data_result_json;
 
     Handler handler = new Handler();
     Intent intent, nav_header_intent;
@@ -156,8 +163,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     TextView temperature_text ;
 
-
-    JSONObject jsonObject;
 
 
     private ActionBarDrawerToggle mDrawerToggle;
@@ -487,24 +492,13 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     break;
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
+
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    StringTokenizer tokens = new StringTokenizer(readMessage, ",");
-                    //
-                    // Toast.makeText(HomeActivity.this, readMessage, Toast.LENGTH_SHORT).show();
-
+//                    Toast.makeText(HomeActivity.this, readMessage,Toast.LENGTH_SHORT).show();
                     setProgressView(readMessage);
 
 
-//                    int epoch_time  = Integer.parseInt(tokens.nextToken());
-//                    double temp  = Double.parseDouble(tokens.nextToken());
-//                    double SN1  = Double.parseDouble(tokens.nextToken());
-//                    double SN2 = Double.parseDouble(tokens.nextToken());
-//                    double SN3 = Double.parseDouble(tokens.nextToken());
-//                    double SN4 = Double.parseDouble(tokens.nextToken());
-//                    double PM25  = Double.parseDouble(tokens.nextToken());
-//                    Log.w(this.getClass().getName(), "####Received epoch_time: " +epoch_time+" temp: "+temp+" SN1: "+SN1+" SN2: "+SN2+" SN3: "+SN3+" SN4: "+SN4+" PM25: "+PM25);
-                    //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
@@ -1214,6 +1208,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void run() {
                         setText();
+
                     }
                 }, 100);
 
@@ -1232,7 +1227,12 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         StringTokenizer tokens = new StringTokenizer(msg, ",");
         String type = tokens.nextToken();
-        int epoch_time  = Integer.parseInt(tokens.nextToken().trim());
+
+//HH:mm:ss
+
+
+        String epoch_time = tokens.nextToken().trim();
+
         double temp  = Double.parseDouble(tokens.nextToken().trim());
         double SN1  = Double.parseDouble(tokens.nextToken().trim());
         double SN2 = Double.parseDouble(tokens.nextToken().trim());
@@ -1240,10 +1240,13 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         double SN4 = Double.parseDouble(tokens.nextToken().trim());
         double PM25  = Double.parseDouble(tokens.nextToken().trim());
 
+
+
+
+
         double  [] aqi_arr = {SN1, SN2,SN3,SN4,PM25};
 
         CircularProgressView  [] cpvArr  = {so2_progressView,pm_progressView,no2_progressView,co_progressView,o3_progressView};
-
 
 
         Log.w(this.getClass().getName(), "####Received epoch_time: " +epoch_time+" temp: "+temp+" SN1: "+SN1+" SN2: "+SN2+" SN3: "+SN3+" SN4: "+SN4+" PM25: "+PM25);
@@ -1279,6 +1282,48 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         temperature_text.setText((int)temp+" ℉");
+
+        sendJSON(epoch_time, temp,SN1,SN2,SN3,SN4,PM25);
+    }
+//epoch_time, temp,SN1,SN2,SN3,SN4,PM25
+    public void sendJSON(String epoch_time,double temp, double SN1,double SN2,double SN3,double SN4,double PM25){
+
+
+            jsonObject = new JSONObject();
+            try {
+                //Make Sensor data to JSON
+                //UDOO Board
+                jsonObject.put("type", "AQDS-REQ");
+                jsonObject.put("epoch_time", epoch_time);
+                jsonObject.put("temp",temp);
+                jsonObject.put("SO2", SN1);
+                jsonObject.put("CO", SN2);
+                jsonObject.put("NO2",SN3 );
+                jsonObject.put("O3", SN4);
+                jsonObject.put("PM25", PM25);
+
+                //Location data
+                jsonObject.put("lat", currentPosition.latitude);
+                jsonObject.put("lon", currentPosition.longitude);
+
+
+                Receive_json receive_json = new Receive_json();
+                sensor_data_result_json = receive_json.getResponseOf(HomeActivity.this, jsonObject, url);
+
+                if(sensor_data_result_json != null) {
+                    if (sensor_data_result_json.getString("success_or_fail").equals("receivesuccess")) {
+
+
+                    }
+                    else {
+                        Toast.makeText(HomeActivity.this, "Data send fail", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
     }
 
 }

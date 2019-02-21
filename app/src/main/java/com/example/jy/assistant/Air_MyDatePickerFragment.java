@@ -49,9 +49,10 @@ public class Air_MyDatePickerFragment extends DialogFragment {
                             " / " + (view.getMonth()+1) +
                             " / " + view.getDayOfMonth(), Toast.LENGTH_SHORT).show();
 
-                 AirHistoryActivity.day = day;
-                 AirHistoryActivity.month = month+1;
-                 AirHistoryActivity.year = year;
+                    int pick_day = day;
+                    int pick_month = month+1;
+                    int pick_year = year;
+
 
                 String day_str =""+ AirHistoryActivity.day ;
                 String month_str=""+AirHistoryActivity.month ;
@@ -59,11 +60,11 @@ public class Air_MyDatePickerFragment extends DialogFragment {
 
 
 
-                if(AirHistoryActivity.day >= 0 && AirHistoryActivity.day <= 9) {
+                if(pick_day >= 0 && pick_day <= 9) {
                         day_str = "0"+ day_str;
 
                  }
-                 if(AirHistoryActivity.month >= 0 && AirHistoryActivity.month <= 9){
+                 if(pick_month>= 0 && pick_month<= 9){
                         month_str = "0"+month_str;
                  }
 
@@ -76,6 +77,12 @@ public class Air_MyDatePickerFragment extends DialogFragment {
                         AirHistoryActivity.endDate.setText(month_str + "/" + day_str+ "/" +year_str);
                      break;
                  }
+
+                    AirHistoryActivity.day = day_str;
+                    AirHistoryActivity.month = month_str;
+                    AirHistoryActivity.year = year_str;
+
+
                 }
             };
 
