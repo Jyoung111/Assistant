@@ -19,6 +19,7 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,60 +91,60 @@ public class AirHistoryActivity extends AppCompatActivity {
                         if(aqi_history_result_json != null) {
                             if (aqi_history_result_json.getString("success_or_fail").equals("aqiselectsuccess")) {
 
+                                entries1 = new ArrayList<>();
+                                entries2 = new ArrayList<>();
+                                entries3 = new ArrayList<>();
+                                entries4 = new ArrayList<>();
+                                entries5 = new ArrayList<>();
+
                                 JSONArray cast = aqi_history_result_json.getJSONArray("aqi_data");
-                                for (int i=0; i<cast.length(); i++) {
+                                for (int i=0; i< cast.length(); i++) {
                                     JSONObject actor = cast.getJSONObject(i);
                                     //date, pm, co,so2,no2,o3
                                     date = actor.get("air_date").toString();
-                                    pm = actor.getDouble("RAW_PM");
-                                    co = actor.getDouble("RAW_CO");
-                                    so2 = actor.getDouble("RAW_SO2");
-                                    no2 = actor.getDouble("RAW_NO2");
-                                    o3 = actor.getDouble("RAW_O3");
+                                    pm = actor.getInt("AQI_PM");
+                                    co = actor.getInt("AQI_CO");
+                                    so2 = actor.getInt("AQI_SO2");
+                                    no2 = actor.getInt("AQI_NO2");
+                                    o3 = actor.getInt("AQI_O3");
 
 
+                                    entries1.add(new Entry((float)pm,i));
+                                    entries2.add(new Entry(i,(float)co));
+                                    entries3.add(new Entry(i,(float)so2));
+                                    entries4.add(new Entry(i,(float)no2));
+                                    entries5.add(new Entry(i,(float)o3));
 
-                                    entries1 = new ArrayList<>();
-                                    entries1.add(new Entry(1,(float)pm ));
-
-                                    entries2 = new ArrayList<>();
-                                    entries2.add(new Entry(2,(float)co));
-
-
-                                    entries3 = new ArrayList<>();
-                                    entries3.add(new Entry(3,(float)so2));
-
-
-                                    entries4 = new ArrayList<>();
-                                    entries4.add(new Entry(4, (float)no2));
-
-
-                                    entries5 = new ArrayList<>();
-                                    entries5.add(new Entry(5, (float)o3));
-
-
-                                    Log.w("select-data",date +" "+pm+""+co+""+so2+""+no2+""+o3+"");
+                                    Log.w("select-data",date +" "+pm+" "+co+" "+so2+" "+no2+" "+o3+" ");
 
 //                                    Log.w("select-data", String.valueOf(actor));
 
                                 }
-                                LineData chartData = new LineData();
+
+
+                                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
                                 LineDataSet set1 = new LineDataSet(entries1, "PM2.5");
-                                chartData.addDataSet(set1);
+//                                chartData.addDataSet(set1);
+                                dataSets.add(set1);
 
-                                LineDataSet set2 = new LineDataSet(entries2, "CO");
-                                chartData.addDataSet(set2);
+//                                LineDataSet set2 = new LineDataSet(entries2, "CO");
+////                                chartData.addDataSet(set2);
+//                                dataSets.add(set2);
+//
+//                                LineDataSet set3 = new LineDataSet(entries3, "SO2");
+////                                chartData.addDataSet(set3);
+//                                dataSets.add(set3);
+//
+//                                LineDataSet set4 = new LineDataSet(entries4, "NO2");
+////                                chartData.addDataSet(set4);
+//                                dataSets.add(set4);
+//
+//                                LineDataSet set5 = new LineDataSet(entries5, "O3");
+////                                chartData.addDataSet(set5);
+//                                dataSets.add(set5);
 
-                                LineDataSet set3 = new LineDataSet(entries3, "SO2");
-                                chartData.addDataSet(set3);
-
-                                LineDataSet set4 = new LineDataSet(entries4, "NO2");
-                                chartData.addDataSet(set4);
-
-                                LineDataSet set5 = new LineDataSet(entries5, "O3");
-                                chartData.addDataSet(set5);
-
+                                LineData chartData = new LineData(dataSets);
                                 chart.setData(chartData);
                                 chart.animateXY(1000, 1000);
 

@@ -1240,6 +1240,11 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         double SN3 = Double.parseDouble(tokens.nextToken().trim());
         double SN4 = Double.parseDouble(tokens.nextToken().trim());
         double PM25  = Double.parseDouble(tokens.nextToken().trim());
+        double raw_SN1  = Double.parseDouble(tokens.nextToken().trim());
+        double raw_SN2 = Double.parseDouble(tokens.nextToken().trim());
+        double raw_SN3 = Double.parseDouble(tokens.nextToken().trim());
+        double raw_SN4 = Double.parseDouble(tokens.nextToken().trim());
+        double raw_PM25  = Double.parseDouble(tokens.nextToken().trim());
 
 
 
@@ -1284,10 +1289,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         temperature_text.setText((int)temp+" ℉");
 
-        sendJSON(epoch_time, temp,SN1,SN2,SN3,SN4,PM25);
+        sendJSON(epoch_time, temp,SN1,SN2,SN3,SN4,PM25,raw_SN1,raw_SN2,raw_SN3,raw_SN4,raw_PM25);
     }
 //epoch_time, temp,SN1,SN2,SN3,SN4,PM25
-    public void sendJSON(String epoch_time,double temp, double SN1,double SN2,double SN3,double SN4,double PM25){
+    public void sendJSON(String epoch_time,double temp, double SN1,double SN2,double SN3,double SN4,double PM25, double raw_SN1,double raw_SN2,double raw_SN3,double raw_SN4,double raw_PM25){
 
 
             jsonObject = new JSONObject();
@@ -1299,11 +1304,16 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 jsonObject.put("type", "AQDS-REQ");
                 jsonObject.put("epoch_time", epoch_time);
                 jsonObject.put("temp",temp);
-                jsonObject.put("SO2", SN4);
-                jsonObject.put("CO", SN3);
-                jsonObject.put("NO2",SN1 );
-                jsonObject.put("O3", SN2);
-                jsonObject.put("PM25", PM25);
+                jsonObject.put("SO2", (int)SN4);
+                jsonObject.put("CO", (int)SN3);
+                jsonObject.put("NO2",(int)SN1 );
+                jsonObject.put("O3", (int)SN2);
+                jsonObject.put("PM25", (int)PM25);
+                jsonObject.put("raw_SO2", raw_SN4);
+                jsonObject.put("raw_CO", raw_SN3);
+                jsonObject.put("raw_NO2",raw_SN1 );
+                jsonObject.put("raw_O3", raw_SN2);
+                jsonObject.put("raw_PM25", raw_PM25);
                 jsonObject.put("user_seq_num", prefs.getInt("USN",-1));
 
                 //Location data
