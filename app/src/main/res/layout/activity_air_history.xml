@@ -12,7 +12,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7">
+        android:layout_weight="0.5">
 
         <ImageView
             android:id="@+id/endCal"
@@ -99,13 +99,22 @@
             app:layout_constraintStart_toEndOf="@+id/endDate"
             app:layout_constraintTop_toTopOf="parent" />
 
+    </android.support.constraint.ConstraintLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
-            android:layout_height="122dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
@@ -117,15 +126,60 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/show_btn" />
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.3"
+        >
 
 
-    </android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_pm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="PM" />
 
+        <Button
+            android:id="@+id/btn_co"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="CO" />
+
+        <Button
+            android:id="@+id/btn_so2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="SO₂" />
+
+        <Button
+            android:id="@+id/btn_no2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="NO₂" />
+
+        <Button
+            android:id="@+id/btn_o3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:text="O₃" />
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="1.5"
         android:gravity="center_vertical"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
@@ -651,12 +705,5 @@
             <!--app:layout_constraintTop_toTopOf="parent"-->
             <!--app:srcCompat="@drawable/placeholder" />-->
     <!--</android.support.constraint.ConstraintLayout>-->
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        >
 
-
-    </android.support.constraint.ConstraintLayout>
 </LinearLayout>

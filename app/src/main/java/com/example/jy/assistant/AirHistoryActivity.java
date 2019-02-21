@@ -3,6 +3,7 @@ package com.example.jy.assistant;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class AirHistoryActivity extends AppCompatActivity {
     ArrayList<Entry> entries1,entries2,entries3,entries4,entries5;
     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
     LineDataSet set1,set2,set3,set4,set5;
+    Button btn_pm,btn_co,btn_so2,btn_o3,btn_no2;
 
 
     @Override
@@ -76,10 +78,24 @@ public class AirHistoryActivity extends AppCompatActivity {
         entries5 = new ArrayList<>();
         dataSets = new ArrayList<>();
 
+        btn_pm = (Button)findViewById(R.id.btn_pm);
+        btn_co = (Button)findViewById(R.id.btn_co);
+        btn_so2 = (Button)findViewById(R.id.btn_so2);
+        btn_no2 = (Button)findViewById(R.id.btn_no2);
+        btn_o3 = (Button)findViewById(R.id.btn_o3);
+
+
         show_btn = (Button)findViewById(R.id.show_btn);
         show_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                    entries1.clear();
+                    entries2.clear();
+                    entries3.clear();
+                    entries4.clear();
+                    entries5.clear();
+                    dataSets.clear();
 
                     jsonObject = new JSONObject();
                     try {
@@ -127,18 +143,20 @@ public class AirHistoryActivity extends AppCompatActivity {
 
 
                                 set1 = new LineDataSet(entries1, "PM2.5");
+                                set1.setColor(getResources().getColor(R.color.pm_chart));
+                                set1.setCircleColor(getResources().getColor(R.color.pm_chart));
                                 dataSets.add(set1);
 
-//                                LineDataSet set2 = new LineDataSet(entries2, "CO");
+                                set2 = new LineDataSet(entries2, "CO");
 //                                dataSets.add(set2);
-//
-//                                LineDataSet set3 = new LineDataSet(entries3, "SO2");
+
+                                set3 = new LineDataSet(entries3, "SO2");
 //                                dataSets.add(set3);
-//
-//                                LineDataSet set4 = new LineDataSet(entries4, "NO2");
+
+                                set4 = new LineDataSet(entries4, "NO2");
 //                                dataSets.add(set4);
-//
-//                                LineDataSet set5 = new LineDataSet(entries5, "O3");
+
+                                set5 = new LineDataSet(entries5, "O3");
 //                                dataSets.add(set5);
 
                                 LineData chartData = new LineData(dataSets);
@@ -215,6 +233,97 @@ public class AirHistoryActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        btn_pm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(set1 != null) {
+                    dataSets.clear();
+                    set1 = new LineDataSet(entries1, "PM2.5");
+                    set1.setColor(getResources().getColor(R.color.pm_chart));
+                    set1.setCircleColor(getResources().getColor(R.color.pm_chart));
+                    dataSets.add(set1);
+                    LineData chartData = new LineData(dataSets);
+                    chart.clear();
+                    chart.setData(chartData);
+                    chart.animateXY(1000, 1000);
+                    chart.invalidate();
+                }
+            }
+        });
+        btn_co.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(set2 != null){
+                    dataSets.clear();
+                    set2 = new LineDataSet(entries2, "CO");
+                    set2.setColor(getResources().getColor(R.color.co_chart));
+                    set2.setCircleColor(getResources().getColor(R.color.co_chart));
+                    dataSets.add(set2);
+                    LineData chartData = new LineData(dataSets);
+                    chart.clear();
+                    chart.setData(chartData);
+                    chart.animateXY(1000, 1000);
+                    chart.invalidate();
+                }
+            }
+        });
+        btn_so2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(set3 != null) {
+                    dataSets.clear();
+                    set3 = new LineDataSet(entries3, "SO2");
+                    set3.setColor(getResources().getColor(R.color.so2_chart));
+                    set3.setCircleColor(getResources().getColor(R.color.so2_chart));
+                    dataSets.add(set3);
+                    LineData chartData = new LineData(dataSets);
+
+                    chart.clear();
+                    chart.setData(chartData);
+                    chart.animateXY(1000, 1000);
+                    chart.invalidate();
+                }
+            }
+        });
+        btn_no2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(set4!= null){
+                    dataSets.clear();
+                    set4 = new LineDataSet(entries4, "NO2");
+                    set4.setColor(getResources().getColor(R.color.no2_chart));
+                    set4.setCircleColor(getResources().getColor(R.color.no2_chart));
+                    dataSets.add(set4);
+                    LineData chartData = new LineData(dataSets);
+                    chart.clear();
+                    chart.setData(chartData);
+                    chart.animateXY(1000, 1000);
+                    chart.invalidate();
+                }
+            }
+        });
+        btn_o3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(set5 != null) {
+                    dataSets.clear();
+                    set5 = new LineDataSet(entries5, "O3");
+                    set5.setColor(getResources().getColor(R.color.o3_chart));
+                    set5.setCircleColor(getResources().getColor(R.color.o3_chart));
+                    dataSets.add(set5);
+                    LineData chartData = new LineData(dataSets);
+                    chart.clear();
+                    chart.setData(chartData);
+                    chart.animateXY(1000, 1000);
+                    chart.invalidate();
+                }
+            }
+        });
+
+
 
     }
 }

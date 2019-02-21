@@ -9,6 +9,7 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -50,7 +51,7 @@ public class Receive_json {
             DisplayLoadingComm dlc = new DisplayLoadingComm();
             JSONObject receivedMsg = dlc.execute(sendMsg).get();
 
-            Log.w("test received from svr", receivedMsg.toString());
+//            Log.w("test received from svr", receivedMsg.toString());
             return receivedMsg;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -86,7 +87,6 @@ public class Receive_json {
                 httpURLConnection.setFixedLengthStreamingMode(msg.getBytes().length);
 
                 DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-
                 wr.writeBytes(msg);
                 wr.flush();
                 wr.close();
@@ -95,12 +95,17 @@ public class Receive_json {
                 InputStream in = httpURLConnection.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(in);
 
-                int inputStreamData = inputStreamReader.read();
-                while (inputStreamData != -1) {
-                    char current = (char) inputStreamData;
-                    inputStreamData = inputStreamReader.read();
-                    data += current;
-                }
+                BufferedReader bf = new BufferedReader(new InputStreamReader(in));
+                data = bf.readLine();
+                bf.close();
+                in.close();
+
+//                int inputStreamData = inputStreamReader.read();
+//                while (inputStreamData != -1) {
+//                    char current = (char) inputStreamData;
+//                    inputStreamData = inputStreamReader.read();
+//                    data += current;
+//                }
                 Log.w("test", "Data received...." + data);
             } catch (Exception e) {
                 e.printStackTrace();

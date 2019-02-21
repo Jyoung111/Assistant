@@ -36,4 +36,11 @@
 
     <!-- My profile color-->
     <color name="profile_heading">#3797CF</color>
+
+    <!-- AQI History color-->
+    <color name="pm_chart">#07bc13</color>
+    <color name="co_chart">#ffae00</color>
+    <color name="so2_chart">#0b77c4</color>
+    <color name="no2_chart">#ce0e0e</color>
+    <color name="o3_chart">#010e21</color>
 </resources>
