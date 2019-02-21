@@ -1233,6 +1233,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         String epoch_time = tokens.nextToken().trim();
 
+        //SN1 = no2, SN2 = O3, SN3 = CO, SN4 = SO2
         double temp  = Double.parseDouble(tokens.nextToken().trim());
         double SN1  = Double.parseDouble(tokens.nextToken().trim());
         double SN2 = Double.parseDouble(tokens.nextToken().trim());
@@ -1243,10 +1244,10 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
-
+        //SN1 = no2, SN2 = O3, SN3 = CO, SN4 = SO2
         double  [] aqi_arr = {SN1, SN2,SN3,SN4,PM25};
 
-        CircularProgressView  [] cpvArr  = {so2_progressView,pm_progressView,no2_progressView,co_progressView,o3_progressView};
+        CircularProgressView  [] cpvArr  = {no2_progressView,o3_progressView,co_progressView,so2_progressView,pm_progressView};
 
 
         Log.w(this.getClass().getName(), "####Received epoch_time: " +epoch_time+" temp: "+temp+" SN1: "+SN1+" SN2: "+SN2+" SN3: "+SN3+" SN4: "+SN4+" PM25: "+PM25);
@@ -1293,14 +1294,17 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             try {
                 //Make Sensor data to JSON
                 //UDOO Board
+                //SN1 = no2, SN2 = O3, SN3 = CO, SN4 = SO2
+                SharedPreferences prefs = getSharedPreferences("activity_login",0);
                 jsonObject.put("type", "AQDS-REQ");
                 jsonObject.put("epoch_time", epoch_time);
                 jsonObject.put("temp",temp);
-                jsonObject.put("SO2", SN1);
-                jsonObject.put("CO", SN2);
-                jsonObject.put("NO2",SN3 );
-                jsonObject.put("O3", SN4);
+                jsonObject.put("SO2", SN4);
+                jsonObject.put("CO", SN3);
+                jsonObject.put("NO2",SN1 );
+                jsonObject.put("O3", SN2);
                 jsonObject.put("PM25", PM25);
+                jsonObject.put("user_seq_num", prefs.getInt("USN",-1));
 
                 //Location data
                 jsonObject.put("lat", currentPosition.latitude);
@@ -1312,7 +1316,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 if(sensor_data_result_json != null) {
                     if (sensor_data_result_json.getString("success_or_fail").equals("receivesuccess")) {
-
+                        Log.w("sensor_data_received...","");
 
                     }
                     else {
@@ -1323,6 +1327,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+
 
     }
 

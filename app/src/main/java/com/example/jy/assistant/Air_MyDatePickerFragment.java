@@ -54,9 +54,9 @@ public class Air_MyDatePickerFragment extends DialogFragment {
                     int pick_year = year;
 
 
-                String day_str =""+ AirHistoryActivity.day ;
-                String month_str=""+AirHistoryActivity.month ;
-                String year_str=""+AirHistoryActivity.year ;
+                String day_str =""+ pick_day ;
+                String month_str=""+pick_month ;
+                String year_str=""+pick_year;
 
 
 
@@ -71,16 +71,19 @@ public class Air_MyDatePickerFragment extends DialogFragment {
                  switch (dateView.getId()){
                     case R.id.startDate:
                         AirHistoryActivity.startDate.setText(month_str + "/" + day_str+ "/" +year_str);
-                     break;
+                        AirHistoryActivity.start_day = day_str;
+                        AirHistoryActivity.start_month = month_str;
+                        AirHistoryActivity.start_year = year_str;
+                        break;
 
                     case R.id.endDate:
                         AirHistoryActivity.endDate.setText(month_str + "/" + day_str+ "/" +year_str);
+                        AirHistoryActivity.end_day = day_str;
+                        AirHistoryActivity.end_month = month_str;
+                        AirHistoryActivity.end_year = year_str;
                      break;
                  }
 
-                    AirHistoryActivity.day = day_str;
-                    AirHistoryActivity.month = month_str;
-                    AirHistoryActivity.year = year_str;
 
 
                 }

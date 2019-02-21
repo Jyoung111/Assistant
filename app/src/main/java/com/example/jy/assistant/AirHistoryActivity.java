@@ -29,15 +29,19 @@ import java.util.List;
 
 public class AirHistoryActivity extends AppCompatActivity {
 
-    public static String year = "", month = "", day = "";
+    public static String start_year = "", start_month = "", start_day = "";
+    public static String end_year = "", end_month = "", end_day = "";
     public static TextView startDate;
     public static TextView endDate;
     Button show_btn;
     JSONObject jsonObject,aqi_history_result_json;
-    String url = "http://teamb-iot.calit2.net/da/signinAndroid";
+    String url = "http://teamb-iot.calit2.net/da/sendAQIHistory";
 
     //date, pm, co,so2,no2,o3
-    double date, pm, co,so2,no2,o3;
+    double  pm, co,so2,no2,o3;
+    String date = "";
+    LineChart chart;
+    ArrayList<Entry> entries1,entries2,entries3,entries4,entries5;
 
 
     @Override
@@ -69,8 +73,8 @@ public class AirHistoryActivity extends AppCompatActivity {
 
                     jsonObject = new JSONObject();
                     try {
-                        String start_date = year+"-"+month+"-"+day;
-                        String end_date = year+"-"+month+"-"+day;
+                        String start_date = start_year+"-"+start_month+"-"+start_day;
+                        String end_date = end_year+"-"+end_month+"-"+end_day;
 
 
                         SharedPreferences prefs = getSharedPreferences("activity_login",0);
@@ -86,28 +90,62 @@ public class AirHistoryActivity extends AppCompatActivity {
                         if(aqi_history_result_json != null) {
                             if (aqi_history_result_json.getString("success_or_fail").equals("aqiselectsuccess")) {
 
-
-                                List<String> allNames = new ArrayList<String>();
-
-                                ArrayList<Entry> entries = new ArrayList<>();
-                                entries.add(new Entry(4f, 0));
-
-
-                                JSONArray cast = aqi_history_result_json.getJSONArray("abridged_cast");
+                                JSONArray cast = aqi_history_result_json.getJSONArray("aqi_data");
                                 for (int i=0; i<cast.length(); i++) {
                                     JSONObject actor = cast.getJSONObject(i);
                                     //date, pm, co,so2,no2,o3
-                                    date = actor.getDouble("air_date");
-                                    pm = actor.getDouble("aqi_pm");
-                                    co = actor.getDouble("aqi_co");
-                                    so2 = actor.getDouble("aqi_so2");
-                                    no2 = actor.getDouble("aqi_no2");
-                                    o3 = actor.getDouble("aqi_o3");
+                                    date = actor.get("air_date").toString();
+                                    pm = actor.getDouble("RAW_PM");
+                                    co = actor.getDouble("RAW_CO");
+                                    so2 = actor.getDouble("RAW_SO2");
+                                    no2 = actor.getDouble("RAW_NO2");
+                                    o3 = actor.getDouble("RAW_O3");
 
 
-                                    String name = actor.getString("name");
-                                    allNames.add(name);
+
+                                    entries1 = new ArrayList<>();
+                                    entries1.add(new Entry(1,(float)pm ));
+
+                                    entries2 = new ArrayList<>();
+                                    entries2.add(new Entry(2,(float)co));
+
+
+                                    entries3 = new ArrayList<>();
+                                    entries3.add(new Entry(3,(float)so2));
+
+
+                                    entries4 = new ArrayList<>();
+                                    entries4.add(new Entry(4, (float)no2));
+
+
+                                    entries5 = new ArrayList<>();
+                                    entries5.add(new Entry(5, (float)o3));
+
+
+                                    Log.w("select-data",date +" "+pm+""+co+""+so2+""+no2+""+o3+"");
+
+//                                    Log.w("select-data", String.valueOf(actor));
+
                                 }
+                                LineData chartData = new LineData();
+
+                                LineDataSet set1 = new LineDataSet(entries1, "PM2.5");
+                                chartData.addDataSet(set1);
+
+                                LineDataSet set2 = new LineDataSet(entries2, "CO");
+                                chartData.addDataSet(set2);
+
+                                LineDataSet set3 = new LineDataSet(entries3, "SO2");
+                                chartData.addDataSet(set3);
+
+                                LineDataSet set4 = new LineDataSet(entries4, "NO2");
+                                chartData.addDataSet(set4);
+
+                                LineDataSet set5 = new LineDataSet(entries5, "O3");
+                                chartData.addDataSet(set5);
+
+                                chart.setData(chartData);
+                                chart.animateXY(1000, 1000);
 
                             }
                             else {
@@ -124,7 +162,7 @@ public class AirHistoryActivity extends AppCompatActivity {
 
 
         //Create Chart
-        LineChart chart = (LineChart) findViewById(R.id.chart);
+        chart = (LineChart) findViewById(R.id.chart);
 
         chart.setDrawGridBackground(false);
         chart.getDescription().setEnabled(false);
