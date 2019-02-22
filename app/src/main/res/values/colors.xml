@@ -43,4 +43,8 @@
     <color name="so2_chart">#0b77c4</color>
     <color name="no2_chart">#ce0e0e</color>
     <color name="o3_chart">#010e21</color>
+
+    <!-- HR History color-->
+    <color name="hr_chart">#FF6347</color>
+
 </resources>

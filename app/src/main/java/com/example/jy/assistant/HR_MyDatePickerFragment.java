@@ -46,31 +46,37 @@ public class HR_MyDatePickerFragment extends DialogFragment {
                             " / " + (view.getMonth()+1) +
                             " / " + view.getDayOfMonth(), Toast.LENGTH_SHORT).show();
 
-                 HeartRateHistoryActivity.day = day;
-                 HeartRateHistoryActivity.month = month+1;
-                 HeartRateHistoryActivity.year = year;
-
-                String day_str =""+ HeartRateHistoryActivity.day ;
-                String month_str=""+HeartRateHistoryActivity.month ;
-                String year_str=""+HeartRateHistoryActivity.year ;
+                    int pick_day = day;
+                    int pick_month = month+1;
+                    int pick_year = year;
 
 
+                    String day_str =""+ pick_day ;
+                    String month_str=""+pick_month ;
+                    String year_str=""+pick_year;
 
-                if(HeartRateHistoryActivity.day >= 0 && HeartRateHistoryActivity.day <= 9) {
+
+                if(pick_day >= 0 && pick_day<= 9) {
                         day_str = "0"+ day_str;
 
                  }
-                 if(HeartRateHistoryActivity.month >= 0 && HeartRateHistoryActivity.month <= 9){
+                 if(pick_month >= 0 && pick_month <= 9){
                         month_str = "0"+month_str;
                  }
 
                  switch (dateView.getId()){
                     case R.id.startDate:
                         HeartRateHistoryActivity.startDate.setText(month_str + "/" + day_str+ "/" +year_str);
+                        HeartRateHistoryActivity.start_day = day_str;
+                        HeartRateHistoryActivity.start_month = month_str;
+                        HeartRateHistoryActivity.start_year = year_str;
                      break;
 
                     case R.id.endDate:
                         HeartRateHistoryActivity.endDate.setText(month_str + "/" + day_str+ "/" +year_str);
+                        HeartRateHistoryActivity.end_day = day_str;
+                        HeartRateHistoryActivity.end_month = month_str;
+                        HeartRateHistoryActivity.end_year = year_str;
                      break;
                  }
                 }

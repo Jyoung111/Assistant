@@ -24,11 +24,13 @@ public class Receive_json {
     Handler handler = new Handler();
     JSONObject jsonObject = new JSONObject();
     String url = "";
+    BufferedReader bf;
+    InputStream in;
 
-    private static Receive_json instance = new Receive_json();
-    public static Receive_json getInstance() {
-        return instance;
-    }
+//    private static Receive_json instance = new Receive_json();
+//    public static Receive_json getInstance() {
+//        return instance;
+//    }
 
 
     public JSONObject getResponseOf(Context ctx, JSONObject sendMsg,String url) {
@@ -75,7 +77,7 @@ public class Receive_json {
             String msg = jsonObjects[0].toString();
             try {
                 httpURLConnection = (HttpURLConnection) new URL(url).openConnection();
-                httpURLConnection.setReadTimeout(3000 /*milliseconds*/);
+                httpURLConnection.setReadTimeout(5000 /*milliseconds*/);
                 httpURLConnection.setConnectTimeout(5000 /* milliseconds */);
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
@@ -92,16 +94,22 @@ public class Receive_json {
                 wr.close();
                 Log.w("test", "Data sent...." + msg);
 
-                InputStream in = httpURLConnection.getInputStream();
+                in = httpURLConnection.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(in);
 
-                BufferedReader bf = new BufferedReader(new InputStreamReader(in));
+                bf = new BufferedReader(new InputStreamReader(in));
+//                data = bf.readLine();
+
+
                 data = bf.readLine();
+                if(!data.endsWith("}"))
+                    data = data+"}]}";
+
                 bf.close();
                 in.close();
 
 //                int inputStreamData = inputStreamReader.read();
-//                while (inputStreamData != -1) {
+//                while (inputStreamData != null) {
 //                    char current = (char) inputStreamData;
 //                    inputStreamData = inputStreamReader.read();
 //                    data += current;
@@ -116,7 +124,7 @@ public class Receive_json {
             }
 
             try {
-                jsonObject = new JSONObject(new String(data));
+                jsonObject = new JSONObject(data);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 jsonObject = null;

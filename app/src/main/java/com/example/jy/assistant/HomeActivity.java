@@ -61,8 +61,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -77,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     String url = "http://teamb-iot.calit2.net/da/receiveSensorData";
-    JSONObject jsonObject, sensor_data_result_json;
+    JSONObject jsonObject, sensor_data_result_json, hr_data_result_json;
 
     Handler handler = new Handler();
     Intent intent, nav_header_intent;
@@ -1207,8 +1207,11 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        setText();
-
+                        int temp = app.heartRate;
+                        if(temp != 0){
+                            setText();
+                            sendHRJSON();
+                        }
                     }
                 }, 100);
 
@@ -1216,6 +1219,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
+
+
+
 
     public void setText(){
         app = AppController.getInstance();
@@ -1289,11 +1295,15 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         temperature_text.setText((int)temp+" ℉");
 
-        sendJSON(epoch_time, temp,SN1,SN2,SN3,SN4,PM25,raw_SN1,raw_SN2,raw_SN3,raw_SN4,raw_PM25);
+        sendAQIJSON(epoch_time, temp,SN1,SN2,SN3,SN4,PM25,raw_SN1,raw_SN2,raw_SN3,raw_SN4,raw_PM25);
+
     }
 //epoch_time, temp,SN1,SN2,SN3,SN4,PM25
-    public void sendJSON(String epoch_time,double temp, double SN1,double SN2,double SN3,double SN4,double PM25, double raw_SN1,double raw_SN2,double raw_SN3,double raw_SN4,double raw_PM25){
-
+    public void sendAQIJSON(String epoch_time, double temp, double SN1, double SN2, double SN3, double SN4, double PM25, double raw_SN1, double raw_SN2, double raw_SN3, double raw_SN4, double raw_PM25){
+            url = "http://teamb-iot.calit2.net/da/receiveSensorData";
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String datetime = dateformat.format(c.getTime());
 
             jsonObject = new JSONObject();
             try {
@@ -1302,7 +1312,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //SN1 = no2, SN2 = O3, SN3 = CO, SN4 = SO2
                 SharedPreferences prefs = getSharedPreferences("activity_login",0);
                 jsonObject.put("type", "AQDS-REQ");
-                jsonObject.put("epoch_time", epoch_time);
+                jsonObject.put("epoch_time", datetime);
                 jsonObject.put("temp",temp);
                 jsonObject.put("SO2", (int)SN4);
                 jsonObject.put("CO", (int)SN3);
@@ -1326,19 +1336,58 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 if(sensor_data_result_json != null) {
                     if (sensor_data_result_json.getString("success_or_fail").equals("receivesuccess")) {
-                        Log.w("sensor_data_received...","");
-
+                        Log.w("sensor_data_send...","");
                     }
                     else {
-                        Toast.makeText(HomeActivity.this, "Data send fail", Toast.LENGTH_SHORT).show();
+                        Log.w("sensor_data_fail...","");
+//                        Toast.makeText(HomeActivity.this, "Data send fail", Toast.LENGTH_SHORT).show();
                     }
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+    }
+
+    public void sendHRJSON(){
+        url = "http://teamb-iot.calit2.net/da/receiveHRData";
+        jsonObject = new JSONObject();
+        try {
+            //Make HeartRate data to JSON
+            //date, hr, user_seq_num,lat,lon
+            app = AppController.getInstance();
+            int temp = app.heartRate;
+
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String datetime = dateformat.format(c.getTime());
+
+            SharedPreferences prefs = getSharedPreferences("activity_login",0);
+            jsonObject.put("type", "HRDA-REQ");
+            jsonObject.put("epoch_time",datetime);
+            jsonObject.put("user_seq_num", prefs.getInt("USN",-1));
+            jsonObject.put("heart_rate", temp);
+            //Location data
+            jsonObject.put("lat", currentPosition.latitude);
+            jsonObject.put("lon", currentPosition.longitude);
 
 
+            Receive_json receive_json = new Receive_json();
+            hr_data_result_json = receive_json.getResponseOf(HomeActivity.this, jsonObject, url);
+
+            if(hr_data_result_json != null) {
+                if (hr_data_result_json.getString("success_or_fail").equals("HR_receivesuccess")) {
+                    Log.w("HR data send...","");
+                }
+                else {
+                    Log.w("sensor_data_fail...","");
+//                    Toast.makeText(HomeActivity.this, "Data send fail", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

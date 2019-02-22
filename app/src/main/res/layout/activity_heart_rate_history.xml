@@ -11,7 +11,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7">
+        android:layout_weight="0.3">
 
         <ImageView
             android:id="@+id/endCal"
@@ -44,7 +44,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:text="01/30/2019"
             android:fontFamily="@font/normal_font"
             android:textColor="@color/login_form_details_dark"
             app:layout_constraintStart_toEndOf="@+id/endCal"
@@ -81,7 +80,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:fontFamily="@font/normal_font"
-            android:text="01/28/2019"
             android:textColor="@color/login_form_details_dark"
             app:layout_constraintStart_toEndOf="@+id/startCal"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -103,10 +101,19 @@
             app:layout_constraintStart_toEndOf="@+id/endDate"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.1"
+        >
+
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
-            android:layout_height="122dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="10dp"
@@ -120,24 +127,27 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/show_btn" />
+    </LinearLayout>
 
 
-
-    </android.support.constraint.ConstraintLayout>
-
-
-    <TableLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="1.2"
+        android:fillViewport="true">
+
+    <TableLayout
+        android:id="@+id/hr_table"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:shrinkColumns="*"
         android:stretchColumns="*"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingTop="4dp"
+        android:paddingTop="8dp"
         android:paddingBottom="4dp"
         android:layout_marginTop="4dp"
-        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -168,221 +178,10 @@
                 android:textColor="@color/login_form_details_dark"
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="RR"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/bold_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
         </TableRow>
 
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01/28/2019"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="68"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="60"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-        </TableRow>
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01/27/2019"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="36"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-
-        </TableRow>
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01/26/2019"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="47"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="36"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-
-        </TableRow>
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01/25/2019"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="48"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="48"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-
-        </TableRow>
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01/24/2019"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="23"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="25"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-                />
-        </TableRow>
-        <TableRow>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="01/23/2019"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="66"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="33"
-                android:textAlignment="center"
-                android:background="@drawable/table_border"
-                android:fontFamily="@font/normal_font"
-                android:textColor="@color/login_form_details_dark"
-                />
-
-        </TableRow>
     </TableLayout>
-
+    </ScrollView>
 
     <!--<android.support.constraint.ConstraintLayout-->
         <!--android:layout_width="match_parent"-->
@@ -413,13 +212,6 @@
             <!--app:layout_constraintTop_toTopOf="parent"-->
             <!--app:srcCompat="@drawable/placeholder" />-->
     <!--</android.support.constraint.ConstraintLayout>-->
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        >
-    </android.support.constraint.ConstraintLayout>
 
 
 </LinearLayout>

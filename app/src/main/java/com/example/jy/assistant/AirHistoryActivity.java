@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class AirHistoryActivity extends AppCompatActivity {
     public static TextView startDate;
     public static TextView endDate;
     Button show_btn;
+    Handler handler = new Handler();
     JSONObject jsonObject,aqi_history_result_json;
     String url = "http://teamb-iot.calit2.net/da/sendAQIHistory";
 
@@ -55,6 +57,7 @@ public class AirHistoryActivity extends AppCompatActivity {
     ArrayList<String> date_list=new ArrayList<String>();
     TableLayout aqi_history_table;
     ArrayList<Integer> pm_list,co_list,so2_list,no2_list,o3_list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,6 +264,14 @@ public class AirHistoryActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                show_btn.setClickable(false);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        show_btn.setClickable(true);
+                    }
+                }, 2000);
                 }
 
         });
