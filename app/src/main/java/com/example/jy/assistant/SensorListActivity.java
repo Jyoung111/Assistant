@@ -445,6 +445,7 @@ public class SensorListActivity extends AppCompatActivity {
                             }
                         } else {
                             Log.w("sensor_data_fail...", "");
+                            Toast.makeText(SensorListActivity.this, "Device List Loading Fail", Toast.LENGTH_SHORT).show();
                         }
                     }
 
