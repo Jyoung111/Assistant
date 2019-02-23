@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class MyProfileActivity extends AppCompatActivity {
 
-    LinearLayout change_pwd_layout,deregistration_layout;
+    LinearLayout change_pwd_layout,deregistration_layout,sensorlist_layout;
     Intent intent;
 
     @Override
@@ -37,6 +37,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         change_pwd_layout = (LinearLayout)findViewById(R.id.change_pwd_layout);
         deregistration_layout = (LinearLayout)findViewById(R.id.deregistraion_layout);
+        sensorlist_layout = (LinearLayout)findViewById(R.id.sensorlist_layout);
 
         change_pwd_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +54,15 @@ public class MyProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        sensorlist_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(MyProfileActivity.this, SensorListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

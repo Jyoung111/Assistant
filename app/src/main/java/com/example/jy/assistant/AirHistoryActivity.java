@@ -22,10 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.json.JSONArray;
@@ -237,6 +239,17 @@ public class AirHistoryActivity extends AppCompatActivity {
                                             cnt++;
                                         }
                                     }
+
+                                    XAxis xAxis = chart.getXAxis();
+                                    xAxis.setLabelCount(3,true);
+//                                    xAxis.setLabelRotationAngle(-20);
+                                    xAxis.setValueFormatter(new IAxisValueFormatter() {
+                                        @Override
+                                        public String getFormattedValue(float value, AxisBase axis) {
+                                            int index = (int) value;
+                                            return date_list.get(index);
+                                            }
+                                    });
 
 
                                     //Show Graph

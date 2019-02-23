@@ -31,7 +31,7 @@
                 android:id="@+id/temperature_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView9"
+                android:layout_below="@+id/weather_img"
                 android:layout_marginLeft="8dp"
                 android:fontFamily="@font/bold_font"
                 android:text=" 0 ℉"
@@ -39,7 +39,7 @@
                 android:textSize="25dp" />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/weather_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
 
@@ -85,15 +85,15 @@
                 android:textSize="15dp" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/cloth_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_below="@id/cloth_img"
+                android:layout_marginStart="55dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/bold_font"
                 android:text="Thin Cloth"
                 android:textColor="@color/login_form_details_dark"
-                android:layout_below="@id/cloth_img"
                 android:textSize="20dp" />
         </RelativeLayout>
     </LinearLayout>

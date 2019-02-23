@@ -152,7 +152,8 @@ public class HeartRateHistoryActivity extends AppCompatActivity {
 
                     SharedPreferences prefs = getSharedPreferences("activity_login", 0);
                     jsonObject.put("type", "HHR-REQ");
-                    jsonObject.put("user_seq_num", prefs.getInt("USN", -1));
+                    jsonObject.put("user" +
+                            "_seq_num", prefs.getInt("USN", -1));
                     jsonObject.put("start_date", start_date);
                     jsonObject.put("end_date", end_date);
 
@@ -178,7 +179,7 @@ public class HeartRateHistoryActivity extends AppCompatActivity {
                                 }
 
 
-                                set1 = new LineDataSet(entries1, "PM2.5");
+                                set1 = new LineDataSet(entries1, "HR");
                                 set1.setColor(getResources().getColor(R.color.hr_chart));
                                 set1.setCircleColor(getResources().getColor(R.color.hr_chart));
                                 dataSets.add(set1);
@@ -208,9 +209,8 @@ public class HeartRateHistoryActivity extends AppCompatActivity {
 
 
                                 XAxis xAxis = chart.getXAxis();
-                                xAxis.setLabelRotationAngle(-40);
-
-                                xAxis.setLabelCount(cnt,true);
+                                xAxis.setLabelCount(3,true);
+//                                xAxis.setLabelRotationAngle(-20);
                                 xAxis.setValueFormatter(new IAxisValueFormatter() {
                                     @Override
                                     public String getFormattedValue(float value, AxisBase axis) {
@@ -222,7 +222,6 @@ public class HeartRateHistoryActivity extends AppCompatActivity {
                                 LineData chartData = new LineData(dataSets);
                                 chart.clear();
                                 chart.setData(chartData);
-                                chart.setVisibleXRangeMaximum(50);
                                 chart.animateXY(1000, 1000);
                                 chart.invalidate();
 

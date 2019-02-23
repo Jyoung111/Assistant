@@ -145,6 +145,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
             .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
 
+    TextView cloth_text;
+
     private Circle mCircle;
     private ImageButton heart_btn;
 
@@ -155,6 +157,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 //    teamb-iot.calit2.net
 
     private static String my_URL = "http://teamb-iot.calit2.net";
+    ImageView weather_img,cloth_img;
 
     AppController app ;
 
@@ -235,76 +238,11 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         //ImageButton Settings
         heart_btn = (ImageButton)findViewById(R.id.heart_btn);
 
+//
+//        heart_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
 
-        heart_btn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse));
-
-        ImageView cloth_img = (ImageView)findViewById(R.id.cloth_img);
-        cloth_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Send JSON to Server
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-//                        OutputStream os = null;
-//                        InputStream is = null;
-//                        HttpURLConnection conn = null;
-//                        try {
-//                            //constants
-//                            URL url = new URL(my_URL);
-//                            JSONObject jsonObject = new JSONObject();
-//                            jsonObject.put("type", "realtime");
-//                            jsonObject.put("SO2", "20.203984");
-//                            jsonObject.put("CO", "19.1223423");
-//                            jsonObject.put("NO2", "10.12020");
-//                            jsonObject.put("O3", "15.123124");
-//                            jsonObject.put("PM25", "16.29292929");
-//                            String message = jsonObject.toString();
-//
-//                            conn = (HttpURLConnection) url.openConnection();
-//                            conn.setReadTimeout( 10000 /*milliseconds*/ );
-//                            conn.setConnectTimeout( 15000 /* milliseconds */ );
-//                            conn.setRequestMethod("POST");
-//                            conn.setDoInput(true);
-//                            conn.setDoOutput(true);
-//                            conn.setFixedLengthStreamingMode(message.getBytes().length);
-//
-//                            //make some HTTP header nicety
-//                            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-//                            conn.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-//
-//                            //open
-//                            conn.connect();
-//
-//                            //setup send
-//                            os = new BufferedOutputStream(conn.getOutputStream());
-//                            os.write(message.getBytes());
-//                            //clean up
-//                            os.flush();
-//
-//                            //do somehting with response
-//                            is = conn.getInputStream();
-//
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        } finally {
-//                            //clean up
-//                            try {
-//                                os.close();
-//                                is.close();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                            conn.disconnect();
-//                        }
-                    }
-                }).start();
-            }
-        });
+        cloth_img = (ImageView)findViewById(R.id.cloth_img);
+        weather_img = (ImageView)findViewById(R.id.weahter_img);
 
         app = AppController.getInstance();
 
@@ -322,7 +260,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         //Timer
         WakeupTimer wakeupTimer = new WakeupTimer();
 
+        //img settings
 
+        cloth_text = (TextView) findViewById(R.id.cloth_text);
 
     }
 
@@ -470,8 +410,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
-                           // heart_btn.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.pulse));
-//                            mConversationArrayAdapter.clear();
+                            heart_btn.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.pulse));
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -479,7 +418,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         case BluetoothChatService.STATE_LISTEN:
                         case BluetoothChatService.STATE_NONE:
                             setStatus(R.string.title_not_connected);
-                            //heart_btn.clearAnimation();
+                            heart_btn.clearAnimation();
                             break;
                     }
                     break;
@@ -1014,6 +953,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerOptions.title(markerTitle);
         markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
+        currentMarker = mGoogleMap.addMarker(markerOptions);
 
 
         if ( mMoveMapByAPI ) {
@@ -1208,7 +1148,9 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     @Override
                     public void run() {
                         int temp = app.heartRate;
-                        if(temp != 0){
+                        SharedPreferences prefs = getSharedPreferences("activity_login",0);
+                        int seq_num = prefs.getInt("USN",-1);
+                        if(temp != 0 && seq_num != -1){
                             setText();
                             sendHRJSON();
                         }
@@ -1230,7 +1172,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void setProgressView(String msg){
-
+        Log.d("token_test",msg);
         StringTokenizer tokens = new StringTokenizer(msg, ",");
         String type = tokens.nextToken();
 
@@ -1251,8 +1193,6 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         double raw_SN3 = Double.parseDouble(tokens.nextToken().trim());
         double raw_SN4 = Double.parseDouble(tokens.nextToken().trim());
         double raw_PM25  = Double.parseDouble(tokens.nextToken().trim());
-
-
 
 
         //SN1 = no2, SN2 = O3, SN3 = CO, SN4 = SO2
@@ -1294,6 +1234,36 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         temperature_text.setText((int)temp+" ℉");
+
+        String [] cloth_str = {"Padding","Coat","Trench coats", "Cardigans","Thin knitwear","Long-sleeved","Short-sleeved","Sleeveless shirt"};
+
+        //temp img setting
+        int comp_temp = (int)temp;
+        if(comp_temp <= 39.2){
+            cloth_img.setImageResource(R.drawable.cloth1);
+            cloth_text.setText(cloth_str[0]);
+        }else if(comp_temp >= 41 && comp_temp <= 46.4){
+            cloth_img.setImageResource(R.drawable.cloth2);
+            cloth_text.setText(cloth_str[1]);
+        }else if(comp_temp >= 48.2 && comp_temp <= 51.8){
+            cloth_img.setImageResource(R.drawable.cloth3);
+            cloth_text.setText(cloth_str[2]);
+        }else if(comp_temp >= 53.6 && comp_temp <= 60.8){
+            cloth_img.setImageResource(R.drawable.cloth4);
+            cloth_text.setText(cloth_str[3]);
+        }else if(comp_temp >= 62.6 && comp_temp <= 66.2){
+            cloth_img.setImageResource(R.drawable.cloth5);
+            cloth_text.setText(cloth_str[4]);
+        }else if(comp_temp >= 68 && comp_temp <= 71.6){
+            cloth_img.setImageResource(R.drawable.cloth6);
+            cloth_text.setText(cloth_str[5]);
+        }else if(comp_temp >= 73.4 && comp_temp <= 80.6){
+            cloth_img.setImageResource(R.drawable.cloth7);
+            cloth_text.setText(cloth_str[6]);
+        }else if(comp_temp >= 82.4){
+            cloth_img.setImageResource(R.drawable.cloth8);
+            cloth_text.setText(cloth_str[7]);
+        }
 
         sendAQIJSON(epoch_time, temp,SN1,SN2,SN3,SN4,PM25,raw_SN1,raw_SN2,raw_SN3,raw_SN4,raw_PM25);
 
