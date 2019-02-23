@@ -1239,28 +1239,28 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //temp img setting
         int comp_temp = (int)temp;
-        if(comp_temp <= 39.2){
+        if(comp_temp <= 39){
             cloth_img.setImageResource(R.drawable.cloth1);
             cloth_text.setText(cloth_str[0]);
-        }else if(comp_temp >= 41 && comp_temp <= 46.4){
+        }else if(comp_temp >= 39 && comp_temp < 46){
             cloth_img.setImageResource(R.drawable.cloth2);
             cloth_text.setText(cloth_str[1]);
-        }else if(comp_temp >= 48.2 && comp_temp <= 51.8){
+        }else if(comp_temp >= 46 && comp_temp < 51){
             cloth_img.setImageResource(R.drawable.cloth3);
             cloth_text.setText(cloth_str[2]);
-        }else if(comp_temp >= 53.6 && comp_temp <= 60.8){
+        }else if(comp_temp >= 51 && comp_temp < 60){
             cloth_img.setImageResource(R.drawable.cloth4);
             cloth_text.setText(cloth_str[3]);
-        }else if(comp_temp >= 62.6 && comp_temp <= 66.2){
+        }else if(comp_temp >=  60 && comp_temp < 66){
             cloth_img.setImageResource(R.drawable.cloth5);
             cloth_text.setText(cloth_str[4]);
-        }else if(comp_temp >= 68 && comp_temp <= 71.6){
+        }else if(comp_temp >= 66 && comp_temp < 71){
             cloth_img.setImageResource(R.drawable.cloth6);
             cloth_text.setText(cloth_str[5]);
-        }else if(comp_temp >= 73.4 && comp_temp <= 80.6){
+        }else if(comp_temp >= 71 && comp_temp < 80){
             cloth_img.setImageResource(R.drawable.cloth7);
             cloth_text.setText(cloth_str[6]);
-        }else if(comp_temp >= 82.4){
+        }else if(comp_temp >= 80){
             cloth_img.setImageResource(R.drawable.cloth8);
             cloth_text.setText(cloth_str[7]);
         }

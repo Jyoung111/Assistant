@@ -5,37 +5,52 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.StringTokenizer;
 
 public class SensorListActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
     ArrayList<String> arrayList = new ArrayList<String>();
+
+    String url = "http://teamb-iot.calit2.net/da/receiveSensorData";
+    JSONObject jsonObject, dev_regi_result_json,dev_deregi_result_json,all_dev_list_result_json;
     /**
      * Name of the connected device
      */
@@ -63,6 +78,8 @@ public class SensorListActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 3;
 
 
+    String mac_addr,dev_name;
+
     public ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,21 +91,11 @@ public class SensorListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.actionbar_title);
         TextView title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.mytext);
-        title.setText("Sensor List");
+        title.setText("Sensor Registration");
 
         list = (ListView) findViewById(R.id.listView);
 
-//        //Show Device list
-//        Dev_ItemData temp = new Dev_ItemData();
-//        temp.dev_name = Status.dev_name;
-//        temp.mac_addr = Status.mac_addr;
-//        arrayList.add(temp);
-//
-//        adapter = new DeviceCustomAdapter(arrayList, SensorListActivity.this);
-//        list.setAdapter(adapter);
-
-        arrayList.add("hi\n");
-
+        receive_all_dev();
 
         adapter = new ArrayAdapter<String>(SensorListActivity.this,android.R.layout.simple_list_item_1,arrayList);
         list.setAdapter(adapter);
@@ -100,6 +107,8 @@ public class SensorListActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
     }
 
 
@@ -202,36 +211,7 @@ public class SensorListActivity extends AppCompatActivity {
                 case Constants.MESSAGE_STATE_CHANGE:
                     switch (msg.arg1) {
                         case BluetoothChatService.STATE_CONNECTED:
-//                            //Show Device list
-//
-//                            //Show Device list
-//                            Dev_ItemData temp = new Dev_ItemData();
-//                            temp.dev_name = Status.dev_name;
-//                            temp.mac_addr = Status.mac_addr;
-//                            arrayList.add(temp);
-//
-//
-//                            adapter = new DeviceCustomAdapter(arrayList,SensorListActivity.this);
-//                            list.setAdapter(adapter);
 
-
-//
-
-
-//                            Dev_ItemData temp = new Dev_ItemData();
-//                            temp.dev_name = Status.dev_name;
-//                            temp.mac_addr = Status.mac_addr;
-//                            arrayList.add(temp);
-//
-//
-//                            if(arrayList.size()>0) {
-//                                adapter = new DeviceCustomAdapter1(arrayList, SensorListActivity.this);
-//                                list.setAdapter(adapter);
-//                            }
-
-
-                            // heart_btn.startAnimation(AnimationUtils.loadAnimation(HomeActivity.this, R.anim.pulse));
-//                            mConversationArrayAdapter.clear();
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
 
@@ -267,18 +247,11 @@ public class SensorListActivity extends AppCompatActivity {
                         Toast.makeText(SensorListActivity.this, "Connected to "
                                 + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                         //Show Device list
-//                        Dev_ItemData temp = new Dev_ItemData();
-//                        temp.dev_name = Status.dev_name;
-//                        temp.mac_addr = Status.mac_addr;
-//                        arrayList.add(temp);
-//
-//
-//                        adapter = new ArrayAdapter<String>(SensorListActivity.this,android.R.layout.activity_list_item,arrayList);
-//                        list.setAdapter(adapter);
-//
-//
-//                        adapter.notifyDataSetChanged();
-//                        adapter.notifyDataSetInvalidated();
+
+                        dev_name = Status.dev_name;
+                        mac_addr = Status.mac_addr;
+                        arrayList.add(dev_name + "\n" + mac_addr);
+                        dev_regi(dev_name,mac_addr);
                     }
                     break;
                 case Constants.MESSAGE_TOAST:
@@ -337,137 +310,7 @@ public class SensorListActivity extends AppCompatActivity {
         mChatService.connect(device, secure);
     }
 
-
-
-
-
-//
-//public class DeviceCustomAdapter extends BaseAdapter {
-    //
-//        LayoutInflater inflater = null;
-//        private ArrayList<Dev_ItemData> home_data = null, temp_data = new ArrayList<>();
-//        private int hListCnt = 0;
-////        Button deleteBtn;
-//        Context ctx;
-//        TextView dev_name, mac_addr;
-//        int pos = 0;
-//
-//        public DeviceCustomAdapter(ArrayList<Dev_ItemData> _home_Data, Context ctx) {
-//            this.home_data = _home_Data;
-//            this.hListCnt = home_data.size();
-//            this.ctx = ctx;
-//            inflater = LayoutInflater.from(ctx);
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return hListCnt;
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            return null;
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return position;
-//        }
-//
-//        @Override
-//        public View getView(final int position, View convertView, ViewGroup parent) {
-//
-//            View view_ly = convertView;
-//            try {
-//
-//
-//                if(home_data.size()>0) {
-//
-//                    inflater = (LayoutInflater)ctx.getSystemService(ctx.LAYOUT_INFLATER_SERVICE);
-//
-//
-//                    view_ly = inflater.inflate(R.layout.home_custom_listview_item, null);
-//
-//
-//                    dev_name = (TextView) view_ly.findViewById(R.id.dev_name);
-//                    mac_addr = (TextView) view_ly.findViewById(R.id.mac_addr);
-//
-//                    if (position != -1 && position < home_data.size()) {
-//                        dev_name.setText(home_data.get(position).dev_name);
-//                        mac_addr.setText(home_data.get(position).mac_addr);
-//                    }
-//
-////                    deleteBtn = (Button) view_ly.findViewById(R.id.btn_delete);
-////                    deleteBtn.setTag(position);
-//
-//                    view_ly.setOnClickListener(new View.OnClickListener()
-//                    {
-//                        @Override
-//                        public void onClick(View v)
-//                        {
-//
-//
-//                        }
-//                    });
-//
-////                    deleteBtn.setOnClickListener(new View.OnClickListener() {
-////                        @Override
-////                        public void onClick(View v) {
-////
-////
-////                            removeItemFromList(position);
-////
-////                        }
-////                    });
-//                }
-//                }catch (Exception e)
-//                    {
-//                        Log.i("Exception==", e.toString());
-//                    }
-//
-//            return view_ly;
-//
-//        }
-//
-//        protected void removeItemFromList(int position) {
-//            final int deletePosition = position;
-//            pos = position;
-//
-//            AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-//            builder.setTitle("Alert!");
-//            builder.setMessage("Do you want delete this Device?")
-//                    .setCancelable(false)
-//                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//
-//                            home_data.remove(deletePosition);
-//
-//                            adapter.notifyDataSetChanged();
-//                            adapter.notifyDataSetInvalidated();
-//
-//
-//
-////                        if(home_data.size()==0)
-////                        {
-////                            dev_name.setVisibility(View.INVISIBLE);
-////                            mac_addr.setVisibility(View.INVISIBLE);
-////                            deleteBtn.setVisibility(View.INVISIBLE);
-////                        }
-//
-//                        }
-//                    })
-//                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            dialog.cancel();
-//                        }
-//                    });
-//            AlertDialog alertDialog = builder.create();
-//            alertDialog.show();
-//
-//        }
-//
-//    }
-    protected void removeItemFromList(int position) {
+    protected void removeItemFromList(final int position) {
         final int deletePosition = position;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -476,20 +319,7 @@ public class SensorListActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
-                        arrayList.remove(deletePosition);
-
-                        adapter.notifyDataSetChanged();
-                        adapter.notifyDataSetInvalidated();
-
-
-
-//                        if(home_data.size()==0)
-//                        {
-//                            dev_name.setVisibility(View.INVISIBLE);
-//                            mac_addr.setVisibility(View.INVISIBLE);
-//                            deleteBtn.setVisibility(View.INVISIBLE);
-//                        }
+                        dev_deregi(arrayList.get(position),position);
 
                     }
                 })
@@ -502,6 +332,132 @@ public class SensorListActivity extends AppCompatActivity {
         alertDialog.show();
 
     }
+
+    public void dev_regi(String dev_n, String mac_ad)
+    {
+        url = "http://teamb-iot.calit2.net/da/receivesensor_list";
+
+        jsonObject = new JSONObject();
+        try {
+            //Make Sensor data to JSON
+            //UDOO Board
+            //SN1 = no2, SN2 = O3, SN3 = CO, SN4 = SO2
+            SharedPreferences prefs = getSharedPreferences("activity_login",0);
+            jsonObject.put("type", "SRP-REQ");
+            jsonObject.put("mac_address", mac_ad);
+            jsonObject.put("dev_name",dev_n);
+            jsonObject.put("user_seq_num", prefs.getInt("USN",-1));
+
+
+            Receive_json receive_json = new Receive_json();
+            dev_regi_result_json = receive_json.getResponseOf(SensorListActivity.this, jsonObject, url);
+
+            if(dev_regi_result_json != null) {
+                if (dev_regi_result_json.getString("success_or_fail").equals("insertsuccess")) {
+                    adapter = new ArrayAdapter<String>(SensorListActivity.this,android.R.layout.simple_list_item_1,arrayList);
+                    list.setAdapter(adapter);
+                    Log.w("sensor_data_send...","");
+                }
+                else {
+                    Log.w("sensor_data_fail...","");
+                    Toast.makeText(SensorListActivity.this, "Device Registration Fail", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void dev_deregi(String dev_n, int po)
+    {
+        url = "http://teamb-iot.calit2.net/da/sensor_DeregistAndroid";
+
+        jsonObject = new JSONObject();
+        try {
+            //Make Sensor data to JSON
+            //UDOO Board
+            //SN1 = no2, SN2 = O3, SN3 = CO, SN4 = SO2
+            SharedPreferences prefs = getSharedPreferences("activity_login",0);
+            StringTokenizer tokens = new StringTokenizer(dev_n, "\n");
+            String dev_na = tokens.nextToken();
+            String mac_a = tokens.nextToken();
+
+            jsonObject.put("type", "SDP-REQ");
+            jsonObject.put("mac_address", mac_a);
+            jsonObject.put("user_seq_num", prefs.getInt("USN",-1));
+
+
+            Receive_json receive_json = new Receive_json();
+            dev_deregi_result_json = receive_json.getResponseOf(SensorListActivity.this, jsonObject, url);
+
+            if(dev_deregi_result_json != null) {
+                if (dev_deregi_result_json.getString("success_or_fail").equals("deletesuccess")) {
+                    arrayList.remove(po);
+                    adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetInvalidated();
+
+                }
+                else {
+                    Log.w("sensor_data_fail...","");
+                    Toast.makeText(SensorListActivity.this, "Device Deregistration Fail", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void receive_all_dev(){
+        url = "http://teamb-iot.calit2.net/da/sendalldevlist";
+
+        jsonObject = new JSONObject();
+        try {
+            //Make Sensor data to JSON
+            //UDOO Board
+            //SN1 = no2, SN2 = O3, SN3 = CO, SN4 = SO2
+            SharedPreferences prefs = getSharedPreferences("activity_login", 0);
+
+            jsonObject.put("type", "SDP-REQ");
+            jsonObject.put("user_seq_num", prefs.getInt("USN", -1));
+
+
+            Receive_json receive_json = new Receive_json();
+            all_dev_list_result_json = receive_json.getResponseOf(SensorListActivity.this, jsonObject, url);
+
+            if (all_dev_list_result_json != null) {
+
+                    if (all_dev_list_result_json.getString("success_or_fail").equals("devlistsuccess")) {
+                        JSONArray cast = all_dev_list_result_json.getJSONArray("dev_list");
+                        if (cast.length() > 0) {
+                            for (int i = 0; i < cast.length(); i++) {
+                                JSONObject actor = cast.getJSONObject(i);
+                                //date, pm, co,so2,no2,o3
+                                String received_name = actor.get("dev_name").toString();
+                                String received_mac = actor.get("mac_addr").toString();
+
+                                //Save Date
+                                arrayList.add(received_name + "\n" + received_mac);
+                            }
+                        } else {
+                            Log.w("sensor_data_fail...", "");
+                        }
+                    }
+
+            }
+        }catch (JSONException e) {
+                e.printStackTrace();
+        }
+    }
+
+
+
+
+
 
 
 }

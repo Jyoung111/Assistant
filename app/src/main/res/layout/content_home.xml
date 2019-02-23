@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cloth_img"
-                android:layout_marginStart="55dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/bold_font"
                 android:text="Thin Cloth"
