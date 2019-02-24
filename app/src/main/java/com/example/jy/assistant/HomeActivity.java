@@ -26,6 +26,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,9 +39,16 @@ import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -57,6 +65,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vaibhavlakhera.circularprogressview.CircularProgressView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -77,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     String url = "http://teamb-iot.calit2.net/da/receiveSensorData";
-    JSONObject jsonObject, sensor_data_result_json, hr_data_result_json;
+    JSONObject jsonObject, sensor_data_result_json, hr_data_result_json,realtime_marker_result_json;
 
     Handler handler = new Handler();
     Intent intent, nav_header_intent;
@@ -263,6 +272,8 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         //img settings
 
         cloth_text = (TextView) findViewById(R.id.cloth_text);
+
+
 
     }
 
@@ -557,6 +568,27 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mGoogleMap = googleMap;
 
+        MarkerOptions markerOptions1 = new MarkerOptions();
+        markerOptions1.position(new LatLng(32.879950, -117.236215));
+        markerOptions1.title("Sensor2");
+        markerOptions1.draggable(true);
+        markerOptions1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        mGoogleMap.addMarker(markerOptions1);
+
+        MarkerOptions markerOptions2 = new MarkerOptions();
+        markerOptions2.position(new LatLng(32.881371, -117.235649));
+        markerOptions2.title("Sensor3");
+        markerOptions2.draggable(true);
+        markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        mGoogleMap.addMarker(markerOptions2);
+
+        MarkerOptions markerOptions3 = new MarkerOptions();
+        markerOptions3.position(new LatLng(32.880596, -117.235376));
+        markerOptions3.title("Sensor4");
+        markerOptions3.draggable(true);
+        markerOptions3.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        mGoogleMap.addMarker(markerOptions3);
+
 
         //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
         //지도의 초기위치를 UCSD로 이동
@@ -564,7 +596,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         mGoogleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
 
             @Override
@@ -929,7 +961,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void moveCameraNow(){
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(currentLatLng);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 17.5f);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 16f);
         //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
         mGoogleMap.moveCamera(cameraUpdate);
     }
@@ -960,7 +992,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             Log.d( TAG, "setCurrentLocation :  mGoogleMap moveCamera "
                     + location.getLatitude() + " " + location.getLongitude() ) ;
-             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 17.5f);
+             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 16f);
             //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
             mGoogleMap.moveCamera(cameraUpdate);
 
@@ -989,7 +1021,7 @@ public class HomeActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mGoogleMap.addMarker(markerOptions);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 17.5f);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, 16f);
         mGoogleMap.moveCamera(cameraUpdate);
 
     }

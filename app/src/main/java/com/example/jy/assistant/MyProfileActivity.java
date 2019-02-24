@@ -106,10 +106,12 @@ public class MyProfileActivity extends AppCompatActivity {
                     String sex = profile_result_jsonObject.getString("sex");
 
 
-                    email_text.setText(email);
-                    fname_text.setText(fname);
-                    lname_text.setText(lname);
-                    sex_text.setText(sex);
+                    if(email != null && fname != null && lname != null && sex != null) {
+                        email_text.setText(email);
+                        fname_text.setText(fname);
+                        lname_text.setText(lname);
+                        sex_text.setText(sex);
+                    }
 
                     Log.w("Receive", "" + Status.USN + " " + "" + Status.EMAIL);
 
